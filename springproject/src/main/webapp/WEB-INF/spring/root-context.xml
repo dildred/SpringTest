@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- mariaDb연동 디비 만들어서 디비 설정해야하므로 아직 아무것도 안적어놓음; 나중에 정해지면 작성하는 것으로..-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mariadb://localhost:3306/데이터베이스(스키마)명"></property>
+        <property name="username" value="아이디"></property>
+        <property name="password" value="비밀번호"></property>
+    </bean>
+
+
+	<!-- Mapper등록 mappers상위폴더 전부 등록가능하게 설정해놓음. -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpath:/mapper-config.xml" />
+		<!--config로케이션의 별도의 맵퍼 설정을 하지 않았으면 여기 아래에 설정을 해줘야한다. 여러개일 경우 *로 등록할 수 있다. -->
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:/mappers/*.xml</value>
+			</array>
+		</property>
+
+	</bean>
+
+	<!-- sqlTemplate 설정 -->
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- form에 파일 다운로드 하는 거 설정 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="31457280" /> <!--file 30MB 1024*1024*30 -->
+		<property name="maxInMemorySize" value="31457280" />
+	</bean>
+</beans>
