@@ -8,6 +8,7 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<default-servlet-handler/>
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven>
@@ -25,8 +26,15 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/css/**" location="/resources/css/" />
-	<resources mapping="/js/**" location="/resources/js/" />
+	<resources mapping="/css/** **" location="/resources/css/" />
+	<resources mapping="/js/**" location="/resources/js/"  />
+	<!-- js아래에 하위폴더 생성할 때에 매핑 설정해 줄 것. css도 마찬가지 -->
+	<!-- 공통설정 매핑 -->
+	<resources mapping="/js/process/**" location="/resources/js/process/"  />
+	<!-- 개별 처리 설정 매핑 -->
+	<!-- 재료 js -->
+	<resources mapping="/js/material/**" location="/resources/js/material/"  />
+	
 
 	<!-- 아래에 있는 것이 컨트롤러 설정 자세한 내용은 TestController파일 참고 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

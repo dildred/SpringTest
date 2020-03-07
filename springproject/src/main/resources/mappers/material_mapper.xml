@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스 -->
+<mapper namespace="material">
+	<cache />
+	
+	<!-- 재료 분류 목록 -->
+	<select id="getMaterialStatus" resultType="java.lang.String" parameterType="java.lang.String">
+		select 
+			distinct m.mat_status 
+		from 
+			material m 
+			where del_flg = '0'
+	</select>
+	
+
+</mapper>

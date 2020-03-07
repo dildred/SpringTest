@@ -24,7 +24,7 @@ MyBatis Mapper설정임
 	<!-- Model(DTO) 담기 -->
 	<typeAliases>
 		<typeAlias type="com.project.emp.dto.TestDto" alias="Test"/>
-		
+		<typeAlias type="com.project.emp.dto.MaterialDto" alias="Material"/>
 	</typeAliases>
 
 
