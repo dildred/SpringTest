@@ -95,7 +95,7 @@ public class AutoPaging {
 	//리스트 개수를 쿼리문에서 불러와서 여기에 저장시키면 끝
 	public AutoPaging setListCount(int listCount) {
 		this.listCount = listCount;
-		limitA = ((page-1)*limit)+1;
+		limitA = ((page-1)*limit);
 		limitB = ((page)*limit);
 		if(limitB > listCount) {
 			limitB = listCount;
