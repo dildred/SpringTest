@@ -48,7 +48,7 @@ public class MaterialService {
 			return 0;
 		}
 		//matNo를 생성한다
-		String matNo = new SimpleDateFormat("YYYYMMDDhhmmss").format(new Date());
+		String matNo = new SimpleDateFormat("YYYYMMddhhmmss").format(new Date());
 		material.setMatNo(matNo);
 		//재료 등록
 		i = materialDao.registMaterialData(material);

@@ -50,6 +50,7 @@
 		from
 			material m 
 			where m.del_flg = '0'
+			order by mat_no desc
 			limit #{limitA,jdbcType=INTEGER}<if test="limitA!=limitB">, #{limitB,jdbcType=INTEGER}</if>
 	</select>
 	
