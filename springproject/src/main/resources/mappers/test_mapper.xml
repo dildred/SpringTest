@@ -14,7 +14,7 @@
 	아래는 test.testInsert로 요청함
 	자세사항은 TestDao참조
 	 -->
-	<insert id="testInsert" parameterType="TestDto">
+	<insert id="testInsert" parameterType="Test">
 		insert into TestTable(eid, epw, ereg_date) values(#{eid},#{epw},sysdate())
 	</insert>
 	
