@@ -4,6 +4,10 @@
 <mapper namespace="material">
 	<cache />
 	
+	<sql id="columns">
+		mat_no,mat_name,weight_unit,mat_status,del_flg,regist_date,regist_user,update_date,update_user,update_cnt
+	</sql>
+	
 	<!-- 재료 분류 목록 -->
 	<select id="getMaterialStatus" resultType="java.lang.String" parameterType="java.lang.String">
 		select 
@@ -13,5 +17,20 @@
 			where del_flg = '0'
 	</select>
 	
-
+	<!-- 재료 신규 등록 -->
+	<insert id="registMaterialData" parameterType="Material">
+		insert into material(<include refid="columns"></include>)
+		values(#{matNo,jdbcType=VARCHAR},#{matName,jdbcType=VARCHAR},#{weightUnit,jdbcType=VARCHAR},#{matStatus,jdbcType=VARCHAR},'0',now(),'SYSTEM',now(),'SYSTEM',0)
+	</insert>
+	
+	<!-- 재료 분류 목록 -->
+	<select id="isMatName" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select 
+			0
+		from 
+			material m 
+			where mat_name = #{matName,jdbcType=VARCHAR}
+	</select>
+	
+	
 </mapper>

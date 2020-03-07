@@ -14,6 +14,9 @@ $(function(){
 			//데이터가 존재하지 않는다면 기타만 넣기
 			if(data!="" && data!=null){
 				data.forEach(function(item,index){
+					if(index==0){
+						$etcStatus.val(item);
+					}
 					$matStatus.append("<option value = '"+item+"'>"+item+"</option>")
 					$etcStatus.prop("disabled",true);
 				});
@@ -27,9 +30,7 @@ $(function(){
 	});
 	$matStatus.on("change",function(){
 		$matVal = $matStatus.val();
-		console.log($matVal);
 		if($matVal==etc){
-			console.log("얍");
 			$etcStatus.val("");
 			$etcStatus.prop("disabled",false);
 		} else{
@@ -60,12 +61,15 @@ $(function(){
 				switch(data){
 				/**중복 재료 에러*/
 				case 0 : 
+					alert("이미 존재하는 재료입니다.");
 					break;
 				/**데이터 베이스 입력 에러*/
 				case 1 : 
+					console.log("비 정상적인 에러가 발생하였습니다. 재료 등록에 실패하였습니다.");
 					break;
 				/**성공*/
 				case 2 : 
+					alert("등록 완료");
 					break;
 				}
 			},

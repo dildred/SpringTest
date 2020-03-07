@@ -1,5 +1,7 @@
 package com.project.emp.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.emp.controller.MaterialController;
 import com.project.emp.dao.MaterialDao;
 import com.project.emp.dto.MaterialDto;
 import com.project.emp.other.JsonPasing;
@@ -40,7 +41,20 @@ public class MaterialService {
 		// TODO Auto-generated method stub
 		log.info("data확인");
 		log.info(jsonPasing.ModelOnJson(material));
-		return null;
+		//중복 확인(재료명)
+		Integer i = materialDao.isMatName(material.getMatName());
+		if(i!=null && i==0) {
+			return 0;
+		}
+		//matNo를 생성한다
+		String matNo = new SimpleDateFormat("YYYYMMDDhhmmss").format(new Date());
+		material.setMatNo(matNo);
+		//재료 등록
+		i = materialDao.registMaterialData(material);
+		if(i==0) {
+			return 1;
+		}
+		return 2;
 	}
 
 }

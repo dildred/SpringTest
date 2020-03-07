@@ -10,7 +10,7 @@ regist_user varchar(50) not null comment "등록 사용자",
 update_date date not null comment "변경 일자",
 update_user varchar(50) not null comment "변경 사용자",
 update_cnt integer default 0 comment "변경 횟수"
-);
+) engine=innodb charset=utf8mb4;
 
 /*기본키 설정 쿼리문*/
 alter table material add constraint pk_mat_no Primary key(mat_no);
