@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.emp.dao.MaterialDao;
 import com.project.emp.dto.MaterialDto;
+import com.project.emp.other.AutoPaging;
 import com.project.emp.other.JsonPasing;
 
 @Service
@@ -55,6 +56,16 @@ public class MaterialService {
 			return 1;
 		}
 		return 2;
+	}
+
+	public List<MaterialDto> getMaterialList() {
+		// TODO Auto-generated method stub
+		AutoPaging paging = new AutoPaging(1,10,10);
+		Integer listCount = materialDao.getListCount();
+		paging.setListCount(listCount);
+		List<MaterialDto> materialList = materialDao.getMaterialList(paging);
+		log.info(jsonPasing.ModelOnJson(materialList));
+		return materialList;
 	}
 
 }

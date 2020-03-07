@@ -2,8 +2,6 @@ package com.project.emp.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.project.emp.dto.MaterialDto;
 import com.project.emp.service.MaterialService;
 
-/**재료 관련 컨트롤러*/
+/**
+ * 재료 관련 컨트롤러<br>
+ * URL : http://localhost:8080/emp<b>/material~</b>
+ * */
 @Controller
 @RequestMapping("/material")
 public class MaterialController {
@@ -37,12 +39,26 @@ public class MaterialController {
 	private MaterialService materialService;
 	
 	/**
+	 * 재료 메인 웹 페이지 호출
+	 * */
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView mainWndOpen(ModelAndView model) {
+		log.info("※========Material Main Window 호출함=========※");
+		List<MaterialDto> materialList = materialService.getMaterialList();
+		//jsp를 뷰로 설정함
+		model.setViewName(defaultFolder+"material_list");
+		model.addObject("materialList", materialList);
+		return model;
+	}
+	
+	/**
 	 * 재료 등록 웹 페이지 호출
 	 * */
 	@RequestMapping(value = "/regist", method = RequestMethod.GET)
-	public String registWndOpen(HttpServletRequest request) {
+	public ModelAndView registWndOpen(ModelAndView model) {
 		log.info("※========Material Regist 호출함=========※");
-		return defaultFolder+"material_regist";
+		model.setViewName(defaultFolder+"material_regist");
+		return model;
 	}
 	
 	/**

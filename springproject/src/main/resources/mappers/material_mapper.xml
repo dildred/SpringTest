@@ -14,7 +14,7 @@
 			distinct m.mat_status 
 		from 
 			material m 
-			where del_flg = '0'
+			where m.del_flg = '0'
 	</select>
 	
 	<!-- 재료 신규 등록 -->
@@ -29,8 +29,44 @@
 			0
 		from 
 			material m 
-			where mat_name = #{matName,jdbcType=VARCHAR}
+			where m.mat_name = #{matName,jdbcType=VARCHAR}
 	</select>
 	
+	<!-- 재료 전체 리스트 개수 -->
+	<select id="getListCount" resultType="java.lang.Integer">
+		select 
+			count(*)
+		from 
+			material m 
+			where m.del_flg = '0'
+	</select>
+	
+	<!-- 재료 전체 리스트 호출
+		ResultMap -> materialListMap
+	 -->
+	<select id="getAllList" resultMap="materialListMap" parameterType="com.project.emp.other.AutoPaging">
+		select 
+			<include refid="columns"></include> 
+		from
+			material m 
+			where m.del_flg = '0'
+			limit #{limitA,jdbcType=INTEGER}<if test="limitA!=limitB">, #{limitB,jdbcType=INTEGER}</if>
+	</select>
+	
+	<!-- 
+		materialListMap
+		사용 쿼리
+		getAllList
+	 -->
+	<resultMap type="Material" id="materialListMap">
+		<id column="mat_no" jdbcType="VARCHAR" property="matNo"/>
+		<result column="mat_name" jdbcType="VARCHAR" property="matName"/>
+		<result column="weight_unit" jdbcType="VARCHAR" property="weightUnit"/>
+		<result column="mat_status" jdbcType="VARCHAR" property="matStatus"/>
+		<result column="regist_date" jdbcType="TIMESTAMP" property="registDate"/>
+		<result column="regist_user" jdbcType="VARCHAR" property="registUser"/>
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+		<result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+	</resultMap>
 	
 </mapper>
