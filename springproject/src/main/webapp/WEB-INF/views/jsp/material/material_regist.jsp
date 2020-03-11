@@ -35,18 +35,28 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/jsp/process/header.jsp"></jsp:include>
-<div id = "contents">
+<div id = "contents" class = "col-12 card">
 <!-- 자기자신을 호출하는 form만들었음 대신 POST방식으로 데이터를 전송시킬것임. -->
-	<h3>재료 등록</h3>
-	<div>재료명</div>
-	<div><input type ="text" id = "matName" name = "matName"></div>
-	<div>재료 중량 단위</div>
-	<div><input type ="text" id = "weightUnit" name = "weightUnit"></div>
-	<div>재료 분류</div>
-	<div><select id = "matStatus"></select></div>
-	<div>기타 시 직접 입력</div>
-	<div><input id = "etcStatus" name = "matStatus"></div>
-	<div><button id = "submitBtn">등록</button></div>
+    <h3 class = "title card-header text-center">재료 등록</h3>
+    <div class="card-body">
+    <div class="form-group">
+    <label for="matName" class = "col-form-label col-form-label-sm pl-1">재료명</label>
+    <input type="text" class="form-control form-control-sm" id="matName"  name = "matName">
+    </div>
+    <div class="form-group">
+    <label for="weightUnit" class = "col-form-label col-form-label-sm pl-1">재료 중량 단위</label>
+    <input type="text" class="form-control form-control-sm" id = "weightUnit" name = "weightUnit">
+    </div>
+    <div class="form-group">
+    <label for="matStatus" class = "col-form-label col-form-label-sm pl-1">재료 분류</label>
+    <select id = "matStatus" class="form-control form-control-sm"></select>
+    </div>
+    <div class="form-group">
+    <label for="etcStatus" class = "col-form-label col-form-label-sm pl-1">기타 시 직접 입력</label>
+    <input type="text" class="form-control form-control-sm" id = "etcStatus" name = "matStatus">
+    </div>
+    </div>
+    <div class = "card-footer btn-group"><button id = "submitBtn" class = "btn btn-outline-primary">등록</button><button id = "cancelBtn" class = "btn btn-outline-danger">취소</button></div>
 </div>
 <jsp:include page="/WEB-INF/views/jsp/process/footer.jsp"></jsp:include>
 </body>
