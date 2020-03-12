@@ -28,6 +28,8 @@ $(function(){
 			console.log("비 정상적인 에러가 발생하였습니다. 재료 분류 로딩에 실패하였습니다.")
 		}
 	});
+	
+	//재료 분류 변경에 따른 처리 -> 기타를 입력하면 직접 입력 가능하게
 	$matStatus.on("change",function(){
 		$matVal = $matStatus.val();
 		if($matVal==etc){
@@ -39,6 +41,21 @@ $(function(){
 		}
 	});
 	
+	//팝업창 사이즈 조절 불가능하게 처리
+	$(window).resize(function popResizer(o){
+		var width = window.outerWidth;
+		var height = window.outerHeight;
+
+		if(width != 416){
+			width = 416;
+		}
+		if(height != 566){
+			height = 566;
+		}
+        window.resizeTo(width,height);
+	});
+	
+	//등록 버튼 입력시의 처리. 작성된 데이터를 전부 넣은 후 ajax를 통해 데이터 전송함
 	$("#submitBtn").on("click",function(){
 		$matName = $("#matName").val();
 		$weightUnit = $("#weightUnit").val();
