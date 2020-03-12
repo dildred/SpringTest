@@ -37,19 +37,19 @@
 <body>
 <jsp:include page="/WEB-INF/views/jsp/process/header.jsp"></jsp:include>
 <div id = "contents">
-	<div id="list_header">
-		<div></div>
-		<div>재료명</div>
-		<div>재료 중량 단위</div>
-		<div>재료 분류</div>
-		<div>재료 등록일</div>
-		<div>재료 등록자</div>
-		<div>재료 수정일</div>
-		<div>재료 수정자</div>
-	</div>
+	<div id="list_header" class = "text-light text-center font-weight-bold row align-items-start table-primary border-bottom border-secondary mt-2 py-3 mx-auto">
+		<div class = "col"></div>
+		<div class = "col">재료명</div>
+		<div class = "col">재료 중량 단위</div>
+		<div class = "col">재료 분류</div>
+		<div class = "col">재료 등록일</div>
+		<div class = "col">재료 등록자</div>
+		<div class = "col">재료 수정일</div>
+		<div class = "col">재료 수정자</div>
+    	</div>
 	<div id="material_list">
 		<c:if test="${empty materialList }">
-		<div id = "nothing">재료가 존재하지 않습니다.</div>
+		<div id = "nothing" class = "text-center font-weight-bold align-items-center border-top border-bottom border-secondary mt-1 py-4">재료가 존재하지 않습니다.</div>
 		</c:if>
 		<c:if test="${!empty materialList }">
 			<c:forEach items="${materialList }" var="material">
