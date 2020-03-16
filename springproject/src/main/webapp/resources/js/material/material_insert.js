@@ -78,15 +78,19 @@ $(function(){
 				switch(data){
 				/**중복 재료 에러*/
 				case 0 : 
+					//Todo 추후에 화면 상에 창을 띄우는 것으로 수정 예정
 					alert("이미 존재하는 재료입니다.");
 					break;
 				/**데이터 베이스 입력 에러*/
 				case 1 : 
+					//Todo 추후에 화면 상에 창을 띄우는 것으로 수정(위와 동일)
 					console.log("비 정상적인 에러가 발생하였습니다. 재료 등록에 실패하였습니다.");
 					break;
 				/**성공*/
 				case 2 : 
-					alert("등록 완료");
+					console.log("등록 완료");
+					window.close();	
+					opener.location.href="javascript:setRegistEnd(true)"
 					break;
 				}
 			},
@@ -96,4 +100,9 @@ $(function(){
 		});
 	});
 	
+	//취소 버튼 입력시의 처리. 팝업창을 닫음
+	$("#cancelBtn").on("click",function(){
+		opener.location.href="javascript:setRegistEnd(false)"
+		window.close();	
+	});
 })
