@@ -70,4 +70,12 @@
 		<result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
 	</resultMap>
 	
+	<update id = "deleteMaterial" parameterType="Material">
+		update material m 
+			set m.del_flg = '1' 
+		where 
+		m.mat_no = #{matNo,jdbcType=VARCHAR} 
+		and m.mat_name = #{matName,jdbcType=VARCHAR}
+	</update>
+	
 </mapper>

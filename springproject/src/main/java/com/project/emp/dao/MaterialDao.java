@@ -49,11 +49,19 @@ public class MaterialDao {
 		return template.selectOne(namespace + ".getListCount");
 	}
 	/**
-	 * 총 재료의 리스트를 취득한다.
+	 * 총 재료의 리스트를 취득한다.<br>
 	 * @param paging 페이지 해 놓은 것
 	 * */
 	public List<MaterialDto> getMaterialList(@Param("paging") AutoPaging paging) {
 		// TODO Auto-generated method stub
 		return template.selectList(namespace + ".getAllList", paging);
+	}
+	/**
+	 * 재료를 삭제한다(삭제 플래그를 1로 해놓는다)<br>
+	 * @param material 기본키 2개 matNo, matName존재
+	 * */
+	public Integer deleteMaterial(@Param("material") MaterialDto material) {
+		// TODO Auto-generated method stub
+		return template.update(namespace + ".deleteMaterial", material);
 	}
 }

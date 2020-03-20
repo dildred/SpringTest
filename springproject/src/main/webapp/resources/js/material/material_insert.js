@@ -89,8 +89,8 @@ $(function(){
 				/**성공*/
 				case 2 : 
 					console.log("등록 완료");
-					window.close();	
 					opener.location.href="javascript:setRegistEnd(true)"
+					window.close();	
 					break;
 				}
 			},
