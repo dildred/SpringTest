@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.project.emp.dao.MaterialDao;
 import com.project.emp.dto.MaterialDto;
 import com.project.emp.other.AutoPaging;
+import com.project.emp.other.CodeMap;
 import com.project.emp.other.JsonPasing;
 
 @Service
@@ -58,14 +59,49 @@ public class MaterialService {
 		return 2;
 	}
 
-	public List<MaterialDto> getMaterialList() {
+	/**
+	 * 재료 리스트 프로세스 서비스<br>
+	 * 재료 리스트를 호출함
+	 * */
+	public List<MaterialDto> getMaterialList(String page) {
 		// TODO Auto-generated method stub
-		AutoPaging paging = new AutoPaging(1,10,10);
-		Integer listCount = materialDao.getListCount();
-		paging.setListCount(listCount);
+		AutoPaging paging = getThisPaging(page);
 		List<MaterialDto> materialList = materialDao.getMaterialList(paging);
 		log.info(jsonPasing.ModelOnJson(materialList));
 		return materialList;
+	}
+	
+	/**
+	 * 현 페이지 총 개수 가져오기
+	 * */
+	public int getPageAllCount() {
+		// TODO Auto-generated method stub
+		AutoPaging paging = getThisPaging("1");
+		return paging.getMaxPage();
+	}
+	
+	/**
+	 * 현 화면의 자동 페이징 불러오기
+	 * */
+	protected AutoPaging getThisPaging(String page) {
+		AutoPaging paging = null;
+		if(CodeMap.isNumberic(page)) {
+			paging = new AutoPaging(Integer.parseInt(page),10,10);
+		} else {
+			paging = new AutoPaging(1,10,10);
+		}
+		Integer listCount = materialDao.getListCount();
+		paging.setListCount(listCount);
+		return paging;
+	}
+
+	public Integer materialDelete(List<MaterialDto> materialList) {
+		// TODO Auto-generated method stub
+		int i = 0;
+		for(MaterialDto material : materialList) {
+			i = i + materialDao.deleteMaterial(material);
+		}
+		return i;
 	}
 
 }

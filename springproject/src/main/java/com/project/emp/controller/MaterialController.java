@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,12 +45,42 @@ public class MaterialController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView mainWndOpen(ModelAndView model) {
 		log.info("※========Material Main Window 호출함=========※");
-		List<MaterialDto> materialList = materialService.getMaterialList();
+//		List<MaterialDto> materialList = materialService.getMaterialList();
 		//jsp를 뷰로 설정함
-		model.setViewName(defaultFolder+"material_list");
-		model.addObject("materialList", materialList);
+		model.setViewName(defaultFolder+"material_main");
+//		model.addObject("materialList", materialList);
 		return model;
 	}
+	
+	/**
+	 * 리스트 페이지 호출
+	 * */
+	@RequestMapping(value = "/list-proc", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView listProc(ModelAndView model, @RequestParam String page) {
+		log.info("==========Material List 프로세스 실행==========");
+		if(page==null) {
+			page = "1";
+		}
+		List<MaterialDto> materialList = materialService.getMaterialList(page);
+		model.setViewName(defaultFolder+"material_list");
+		model.addObject("materialList", materialList);
+		log.info("==========Material List 프로세스 실행 완료==========");
+		return model;
+	}
+	
+	/**
+	 * 전체 페이지 갯수
+	 * */
+	@RequestMapping(value = "/list-count", method = RequestMethod.GET)
+	@ResponseBody
+	public String listCount() {
+		log.info("==========Material Count 호출=========");
+		int count = materialService.getPageAllCount();
+		log.info("==========Material Count 호출 완료==========");
+		return String.valueOf(count);
+	}
+	
 	
 	/**
 	 * 재료 등록 웹 페이지 호출
@@ -86,6 +117,18 @@ public class MaterialController {
 		List<String> getMaterialStatus = materialService.getMaterialStatus();
 		log.info("==========Material Status 호출 완료==========");
 		return new ResponseEntity<List<String>>(getMaterialStatus,HttpStatus.OK);
+	}
+	
+	/**
+	 * 재료 삭제하기
+	 * */
+	@RequestMapping(value = "/delete-proc", method = RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Integer> deleteProc(@RequestBody List<MaterialDto> materialList) {
+		log.info("==========Material Status DB호출==========");
+		Integer endNum = materialService.materialDelete(materialList);
+		log.info("==========Material Status 호출 완료==========");
+		return new ResponseEntity<Integer>(endNum,HttpStatus.OK);
 	}
 	
 	
