@@ -13,7 +13,6 @@ update_cnt integer default 0 comment "변경 횟수"
 ) engine=innodb charset=utf8mb4;
 
 /*기본키 설정 쿼리문*/
-alter table material add constraint pk_mat_no Primary key(mat_no);
+alter table material add constraint pk_mat_no_name Primary key(mat_no, mat_name);
 
 /*유니크 키 설정 쿼리문*/
-alter table material add constraint unique_mat_name unique(mat_name);
