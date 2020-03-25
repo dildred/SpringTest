@@ -29,7 +29,12 @@
 <!-- 공통 처리 -->
 <script type="text/javascript" src="<c:url value = "/js/process/process_check.js"/>"></script>
 <!-- jsp개별 처리 -->
-<script type="text/javascript" src="<c:url value = "/js/material/material_insert.js"/>"></script>
+<c:if test="${isRegMod eq 'regist'}">
+	<script type="text/javascript" src="<c:url value = "/js/material/material_insert.js"/>"></script>
+</c:if>
+<c:if test="${isRegMod eq 'modify'}">
+	<script type="text/javascript" src="<c:url value = "/js/material/material_modify.js"/>"></script>
+</c:if>
 
 
 </head>
@@ -37,7 +42,7 @@
 <jsp:include page="/WEB-INF/views/jsp/process/header.jsp"></jsp:include>
 <div id = "contents" class = "col-12 card">
 <!-- 자기자신을 호출하는 form만들었음 대신 POST방식으로 데이터를 전송시킬것임. -->
-    <h3 class = "title card-header text-center">재료 등록</h3>
+    <h3 class = "title card-header text-center">재료 <c:if test="${isRegMod eq 'regist'}">등록</c:if><c:if test="${isRegMod eq 'modify'}">변경</c:if></h3>
     <div class="card-body">
     <div class="form-group">
     <label for="matName" class = "col-form-label col-form-label-sm pl-1">재료명</label>
@@ -56,7 +61,9 @@
     <input type="text" class="form-control form-control-sm" id = "etcStatus" name = "matStatus">
     </div>
     </div>
-    <div class = "card-footer btn-group"><button id = "submitBtn" class = "btn btn-outline-primary">등록</button><button id = "cancelBtn" class = "btn btn-outline-danger">취소</button></div>
+    <div class = "card-footer btn-group">
+    <button id = "submitBtn" class = "btn btn-outline-primary"><c:if test="${isRegMod eq 'regist'}">등록</c:if><c:if test="${isRegMod eq 'modify'}">변경</c:if></button>
+    <button id = "cancelBtn" class = "btn btn-outline-danger">취소</button></div>
 </div>
 <jsp:include page="/WEB-INF/views/jsp/process/footer.jsp"></jsp:include>
 </body>

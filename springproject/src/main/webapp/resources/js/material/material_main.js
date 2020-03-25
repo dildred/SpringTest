@@ -8,7 +8,8 @@ $(function() {
 	 */
 	var isRegistEnd = false;
 
-	$("#registBtn").on("click", registPopUp);
+	$("#registBtn").on("click.regist", registPopUp);
+	$("#modifyBtn").on("click.modify", registPopUp);
 	listCount();
 	listCall();
 	$page = $("#pageInput");
@@ -99,13 +100,19 @@ function pageNumCheck(pageval,isButton){
 /**
  * 재료 팝업창 종료시 이벤트(등록을 해서 종료가 된 것인지 혹은 그냥 종료한 것인지)
  */
-function isRegistCheck() {
+function isRegistCheck(isWnd) {
+	//위에 적은 click.regist의 "regist"를 취득하기 위하여 사용함
+	var isWndName = isWnd.handleObj.namespace;
 	if (isRegistEnd) {
-		alert("정상적으로 등록이 완료되었습니다");
-		if (confirm("이어서 등록하시겠습니까?")) {
-			registPopUp();
-		} else {
-			isRegistEnd = false;
+		if(isWndName=="regist"){
+			alert("정상적으로 등록이 완료되었습니다");
+			if (confirm("이어서 등록하시겠습니까?")) {
+				registPopUp(isWnd);
+			} else {
+				isRegistEnd = false;
+			}
+		}else if(isWndName=="modify"){
+			alert("정상적으로 수정이 완료되었습니다");
 		}
 		listCount();
 		listCall();
@@ -114,18 +121,18 @@ function isRegistCheck() {
 /**
  * 팝업창 호출
  */
-function registPopUp() {
+function registPopUp(isWnd) {
+	var isWndName = isWnd.handleObj.namespace;
 	isRegistEnd = false;
 	var regPopup = window
-			.open('./material/regist', null,
+			.open('./material/'+isWndName, null,
 					'width=400,height=500,toolbar=no,scrollbars=no,menubar=no,resizable=no');
 
 	var interval = window.setInterval(function() {
 		try {
 			if (regPopup == null || regPopup.closed) {
 				window.clearInterval(interval);
-				listCall();
-				isRegistCheck();
+				isRegistCheck(isWnd);
 			}
 		} catch (e) {
 		}
@@ -204,6 +211,8 @@ function deleteProc(arrayData){
 			success : function(data){
 				//console.log(data);
 				alert(data + " 개의 데이터를 정상적으로 삭제하였습니다!");
+				listCount();
+				listCall();
 			},
 			error : function(data){
 				console.log("비 정상적인 에러가 발생하였습니다. 재료 삭제에 실패하였습니다.")

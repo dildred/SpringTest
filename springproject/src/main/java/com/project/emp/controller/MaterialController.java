@@ -88,10 +88,22 @@ public class MaterialController {
 	@RequestMapping(value = "/regist", method = RequestMethod.GET)
 	public ModelAndView registWndOpen(ModelAndView model) {
 		log.info("※========Material Regist 호출함=========※");
+		model.addObject("isRegMod", "regist");
 		model.setViewName(defaultFolder+"material_regist");
 		return model;
 	}
-	
+
+	/**
+	 * 재료 변경 웹 페이지 호출
+	 * */
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public ModelAndView modifyWndOpen(ModelAndView model) {
+		log.info("※========Material Modify 호출함=========※");
+		model.addObject("isRegMod", "modify");
+		model.setViewName(defaultFolder+"material_regist");
+		return model;
+	}
+
 	/**
 	 * 재료 등록 프로세스 호출 미작업중
 	 * consumes -> ajax로부터 요청받았을 때의 파일 양식
