@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스 -->
-<mapper namespace="material">
+<mapper namespace="com.project.emp.dao.MaterialDao">
 	<cache />
 	
 	<sql id="columns">
 		mat_no,mat_name,weight_unit,mat_status,del_flg,regist_date,regist_user,update_date,update_user,update_cnt
+	</sql>
+	<sql id="notUpRegDateColumns">
+		mat_no,mat_name,weight_unit,mat_status
 	</sql>
 	
 	<!-- 재료 분류 목록 -->
@@ -44,7 +47,7 @@
 	<!-- 재료 전체 리스트 호출
 		ResultMap -> materialListMap
 	 -->
-	<select id="getAllList" resultMap="materialListMap" parameterType="com.project.emp.other.AutoPaging">
+	<select id="getMaterialList" resultMap="materialListMap" parameterType="com.project.emp.other.AutoPaging">
 		select 
 			<include refid="columns"></include> 
 		from
@@ -57,7 +60,7 @@
 	<!-- 
 		materialListMap
 		사용 쿼리
-		getAllList
+		getMaterialList
 	 -->
 	<resultMap type="Material" id="materialListMap">
 		<id column="mat_no" jdbcType="VARCHAR" property="matNo"/>
@@ -70,12 +73,52 @@
 		<result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
 	</resultMap>
 	
+	<!-- 재료 삭제 코드(실제로 삭제되지는 않음) -->
 	<update id = "deleteMaterial" parameterType="Material">
-		update material m 
-			set m.del_flg = '1' 
+		update material m set 
+			m.del_flg = '1' 
+			,m.update_date = now()
+			,m.update_cnt = update_cnt+1
 		where 
 		m.mat_no = #{matNo,jdbcType=VARCHAR} 
 		and m.mat_name = #{matName,jdbcType=VARCHAR}
+		and m.del_flg = '0'
+	</update>
+	
+	<!-- 살아있는 하나의 데이터 호출 -->
+	<select id="getMaterialDataWithPrimaryKey" resultMap="materialOneData">
+		select 
+			<include refid="notUpRegDateColumns"></include>
+		from 
+			material m 
+			where m.mat_no = #{matNo,jdbcType=VARCHAR} 
+			and m.mat_name = #{matName,jdbcType=VARCHAR}
+			and m.del_flg = '0'
+	</select>
+	
+	<!-- 
+		materialOneData
+		사용 쿼리
+		getMaterialDataWithPrimaryKey
+	 -->
+	<resultMap type="Material" id="materialOneData">
+		<id column="mat_no" jdbcType="VARCHAR" property="matNo"/>
+		<result column="mat_name" jdbcType="VARCHAR" property="matName"/>
+		<result column="weight_unit" jdbcType="VARCHAR" property="weightUnit"/>
+		<result column="mat_status" jdbcType="VARCHAR" property="matStatus"/>
+	</resultMap>
+	
+	<!-- 재료 변경 코드-->
+	<update id = "updateMaterial" parameterType="Material">
+		update material m set
+			m.weight_unit = #{weightUnit,jdbcType=VARCHAR}
+			,m.mat_status = #{matStatus,jdbcType=VARCHAR}
+			,m.update_date = now()
+			,m.update_cnt = update_cnt+1
+		where 
+		m.mat_no = #{matNo,jdbcType=VARCHAR} 
+		and m.mat_name = #{matName,jdbcType=VARCHAR}
+		and m.del_flg = '0'
 	</update>
 	
 </mapper>

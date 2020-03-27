@@ -46,11 +46,11 @@
     <div class="card-body">
     <div class="form-group">
     <label for="matName" class = "col-form-label col-form-label-sm pl-1">재료명</label>
-    <input type="text" class="form-control form-control-sm" id="matName"  name = "matName">
+    <input type="text" class="form-control form-control-sm" id="matName"  name = "matName" <c:if test="${!empty modifyDto}">value = "${modifyDto.matName}" disabled</c:if>>
     </div>
     <div class="form-group">
     <label for="weightUnit" class = "col-form-label col-form-label-sm pl-1">재료 중량 단위</label>
-    <input type="text" class="form-control form-control-sm" id = "weightUnit" name = "weightUnit">
+    <input type="text" class="form-control form-control-sm" id = "weightUnit" name = "weightUnit" <c:if test="${!empty modifyDto}">value = "${modifyDto.weightUnit}" </c:if>>
     </div>
     <div class="form-group">
     <label for="matStatus" class = "col-form-label col-form-label-sm pl-1">재료 분류</label>
@@ -58,7 +58,7 @@
     </div>
     <div class="form-group">
     <label for="etcStatus" class = "col-form-label col-form-label-sm pl-1">기타 시 직접 입력</label>
-    <input type="text" class="form-control form-control-sm" id = "etcStatus" name = "matStatus">
+    <input type="text" class="form-control form-control-sm" id = "etcStatus" name = "matStatus" <c:if test="${!empty modifyDto}">value = "${modifyDto.matStatus}" disabled</c:if>>
     </div>
     </div>
     <div class = "card-footer btn-group">
@@ -66,5 +66,8 @@
     <button id = "cancelBtn" class = "btn btn-outline-danger">취소</button></div>
 </div>
 <jsp:include page="/WEB-INF/views/jsp/process/footer.jsp"></jsp:include>
+<c:if test="${!empty modifyDto}">
+    <input type="hidden" class="" id = "matNo" name = "matNo" value = "${modifyDto.matNo}">
+</c:if>
 </body>
 </html>

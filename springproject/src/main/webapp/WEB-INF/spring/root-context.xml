@@ -42,4 +42,7 @@
 		<property name="maxUploadSize" value="31457280" /> <!--file 30MB 1024*1024*30 -->
 		<property name="maxInMemorySize" value="31457280" />
 	</bean>
+	
+	<import resource="mapper-bean-context.xml"></import>
+	
 </beans>

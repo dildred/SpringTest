@@ -40,7 +40,6 @@ public class MaterialService {
 	 * 재료를 등록함 => 미완성
 	 * */
 	public Integer inputMaterialData(MaterialDto material) {
-		// TODO Auto-generated method stub
 		log.info("data확인");
 		log.info(jsonPasing.ModelOnJson(material));
 		//중복 확인(재료명)
@@ -64,7 +63,6 @@ public class MaterialService {
 	 * 재료 리스트를 호출함
 	 * */
 	public List<MaterialDto> getMaterialList(String page) {
-		// TODO Auto-generated method stub
 		AutoPaging paging = getThisPaging(page);
 		List<MaterialDto> materialList = materialDao.getMaterialList(paging);
 		log.info(jsonPasing.ModelOnJson(materialList));
@@ -75,7 +73,6 @@ public class MaterialService {
 	 * 현 페이지 총 개수 가져오기
 	 * */
 	public int getPageAllCount() {
-		// TODO Auto-generated method stub
 		AutoPaging paging = getThisPaging("1");
 		return paging.getMaxPage();
 	}
@@ -95,13 +92,39 @@ public class MaterialService {
 		return paging;
 	}
 
+	/**
+	 * 재료 삭제 서비스<br>
+	 * 재료 데이터의 삭제플래그를 1로 만듬.
+	 * */
 	public Integer materialDelete(List<MaterialDto> materialList) {
-		// TODO Auto-generated method stub
 		int i = 0;
+		log.info("delete data size : "+materialList.size());
 		for(MaterialDto material : materialList) {
 			i = i + materialDao.deleteMaterial(material);
 		}
 		return i;
+	}
+
+	/**
+	 * 데이터 호출 서비스. 재료 번호와 재료 이름으로 데이터를 호출한다.
+	 * */
+	public MaterialDto getMaterialData(String materialNo, String mateialName) {
+		return materialDao.getMaterialDataWithPrimaryKey(materialNo,mateialName);
+	}
+
+	/**
+	 * 재료 변경 서비스<br>
+	 * 저장되어 있는 재료명과 재료 번호를 토대로 변경함
+	 * */
+	public Integer materialModifyProc(MaterialDto material) {
+		//데이터가 존재하는지 확인
+		if(materialDao.getMaterialDataWithPrimaryKey(material.getMatNo(),material.getMatName())==null) {
+			return 1;
+		}
+		if(materialDao.updateMaterial(material)==1) {
+			return 2;
+		} 
+		return 1;
 	}
 
 }

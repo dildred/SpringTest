@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- mapper interface등록. 인터페이스를 만들어서 등록하는 것으로 사용할 수 있음. -->
+
+<!-- MaterialDao -->
+<bean id="materialDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.project.emp.dao.MaterialDao"></property>
+	<property name="sqlSessionTemplate" ref="sqlSession"></property>
+</bean>
+<!-- TestDao -->
+<bean id="testDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.project.emp.dao.TestDao"></property>
+	<property name="sqlSessionTemplate" ref="sqlSession"></property>
+</bean>
+
+</beans>

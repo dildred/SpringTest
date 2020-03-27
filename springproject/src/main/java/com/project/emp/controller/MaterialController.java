@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -97,8 +98,12 @@ public class MaterialController {
 	 * 재료 변경 웹 페이지 호출
 	 * */
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public ModelAndView modifyWndOpen(ModelAndView model) {
+	public ModelAndView modifyWndOpen(ModelAndView model, @ModelAttribute("matNo") String materialNo, @ModelAttribute("matName") String materialName) {
 		log.info("※========Material Modify 호출함=========※");
+		if(materialNo!=null){
+			MaterialDto modifyData = materialService.getMaterialData(materialNo, materialName);
+			model.addObject("modifyDto",modifyData);
+		}
 		model.addObject("isRegMod", "modify");
 		model.setViewName(defaultFolder+"material_regist");
 		return model;
@@ -143,5 +148,16 @@ public class MaterialController {
 		return new ResponseEntity<Integer>(endNum,HttpStatus.OK);
 	}
 	
+	/**
+	 * 재료 변경 프로세스
+	 * */
+	@RequestMapping(value = "/modify-proc", method = RequestMethod.POST, consumes = "application/json", produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Integer> modifyProc(@RequestBody MaterialDto material) {
+		log.info("==========Material Modify 프로세스 실행==========");
+		Integer successCode = materialService.materialModifyProc(material);
+		log.info("==========Material Modify 프로세스 실행 완료==========");
+		return new ResponseEntity<Integer>(successCode,HttpStatus.OK);
+	}
 	
 }

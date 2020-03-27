@@ -13,19 +13,13 @@ import com.project.emp.dto.TestDto;
  * bean컨테이너에 등록이 되어 있어야 Annotation Autowired(의존 객체 주입)를 사용할 수 있음.<br>
  * */
 @Repository
-public class TestDao {
+public interface TestDao {
 	
-	@Autowired
-    private SqlSessionTemplate template;
-	
-	private String namespace = "test";
     /**
      * testDto라고 적은 것이 매개변수
      * 자세한 내용은 test_mapper.xml참조
      * 
      * */
-    public Integer insertTestDtoTable(@Param("testDto") TestDto testDto){
-          return template.insert(namespace + ".testInsert", testDto);
-    }
-
+    public Integer insertTestDtoTable(@Param("testDto") TestDto testDto);
+    
 }

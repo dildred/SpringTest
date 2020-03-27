@@ -20,13 +20,10 @@ MyBatis Mapper설정임
 		<!-- select 결과값이 null라도 key생성 -->
 		<setting name="callSettersOnNulls" value="true" />
 	</settings>
-	
 	<!-- Model(DTO) 담기 -->
 	<typeAliases>
 		<typeAlias type="com.project.emp.dto.TestDto" alias="Test"/>
 		<typeAlias type="com.project.emp.dto.MaterialDto" alias="Material"/>
 	</typeAliases>
-
-
 
 </configuration>

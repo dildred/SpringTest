@@ -89,7 +89,7 @@ function pageNumCheck(pageval,isButton){
 		$page.val(1);
 		return false;
 	}
-	if((pageval == pageCount && isButton == "2") || (pageval > pageCount && isButton=="3")){
+	if((pageval == pageCount && isButton == "2") || (pageval != "1" && pageval > pageCount && isButton=="3")){
 		alert("마지막 페이지 입니다");
 		$page.val($("#allPageCount").val());
 		return false;
@@ -123,6 +123,30 @@ function isRegistCheck(isWnd) {
  */
 function registPopUp(isWnd) {
 	var isWndName = isWnd.handleObj.namespace;
+	if(isWndName=="modify"){
+		$checkBox = $(".matCheck");
+		var checkCount = 0;
+		var checkArray = Array();
+		for(i=0;i < $checkBox.length;i++) {
+			var checkItem = Array();
+		    if ($checkBox[i].checked == true){
+		    	//matNo 재료 번호 취득
+		    	checkItem[0] = $checkBox.eq(i).val();
+		    	//matName 재료 이름 취득
+		    	checkItem[1] = $checkBox.eq(i).parent().next().text();
+		    	checkArray[checkCount] = checkItem;
+		        checkCount++;
+		    }
+		}
+		if(checkCount > 1){
+			alert("한 항목만 변경할 수 있습니다.");
+			return false;
+		}
+		if(checkCount == 1){
+			isWndName += "?matNo="+checkArray[0][0]+"&matName="+checkArray[0][1];
+		}
+		
+	}
 	isRegistEnd = false;
 	var regPopup = window
 			.open('./material/'+isWndName, null,
@@ -202,23 +226,23 @@ function deleteProc(arrayData){
 				"matName" : arrayData[i][1]
 			}
 		jsonData[i] = datas;
-		$.ajax({
-			type : 'POST', 
-			url : './material/delete-proc',
-			data : JSON.stringify(jsonData),
-			dataType : 'json',
-			contentType : "application/json; charset=utf-8",
-			success : function(data){
-				//console.log(data);
-				alert(data + " 개의 데이터를 정상적으로 삭제하였습니다!");
-				listCount();
-				listCall();
-			},
-			error : function(data){
-				console.log("비 정상적인 에러가 발생하였습니다. 재료 삭제에 실패하였습니다.")
-			}
-		});
 	}
+	$.ajax({
+		type : 'POST', 
+		url : './material/delete-proc',
+		data : JSON.stringify(jsonData),
+		dataType : 'json',
+		contentType : "application/json; charset=utf-8",
+		success : function(data){
+			//console.log(data);
+			alert(data + " 개의 데이터를 정상적으로 삭제하였습니다!");
+			listCount();
+			listCall();
+		},
+		error : function(data){
+			console.log("비 정상적인 에러가 발생하였습니다. 재료 삭제에 실패하였습니다.")
+		}
+	});
 	
 }
 

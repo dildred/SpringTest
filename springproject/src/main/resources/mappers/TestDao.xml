@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 네임스페이스 -->
-<mapper namespace="test">
+<mapper namespace="com.project.emp.dao.TestDao">
 	<cache />
 	
 	<!-- insert문 작성할 때
