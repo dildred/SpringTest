@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 네임스페이스 -->
+<!-- 네임스페이스 ※Mapper의 인터페이스화 준비(namespace가 매퍼인터페이스와 동일화 시켜줘야함) 이후 xml에 MapperFactoryBean-->
 <mapper namespace="material">
 	<cache />
 	
