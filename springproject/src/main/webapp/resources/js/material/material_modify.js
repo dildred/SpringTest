@@ -51,7 +51,7 @@ $(function(){
 				if(data=="" || data==null){
 					return false;
 				}
-				$matNo = $("#matNo").val(data.matNo);
+				$matNo = $("body").append("<input type='hidden' class='' id = 'matNo' name = 'matNo' value = "+data.matNo+">");
 				$matName = $("#matName").val(data.matName);
 				$weightUnit = $("#weightUnit").val(data.weightUnit);
 				$("#matStatus option[value="+data.matStatus+"]").prop('selected', 'selected').change();
@@ -77,6 +77,7 @@ $(function(){
 			$etcSta.prop("disabled",true);
 			$etcSta.val($matVal);
 		}
+		return;
 	});
 	
 	//팝업창 사이즈 조절 불가능하게 처리
@@ -91,6 +92,7 @@ $(function(){
 			height = 566;
 		}
         window.resizeTo(width,height);
+        return;
 	});
 	
 	//등록 버튼 입력시의 처리. 작성된 데이터를 전부 넣은 후 ajax를 통해 데이터 전송함

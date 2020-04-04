@@ -51,7 +51,7 @@
 	<div id="material_list">
 		
 	</div>
-	<div id = "contents-header" class = "mt-2">
+	<div id = "contents-footer" class = "mt-2">
 		<div class="float-left">
 		<button id = "registBtn" class = "btn btn-success">신규 재료 등록</button>
 		<button id = "modifyBtn" class = "btn btn-warning">재료 수정 및 변경</button>

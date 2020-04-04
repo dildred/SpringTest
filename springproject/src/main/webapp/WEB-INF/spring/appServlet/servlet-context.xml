@@ -35,6 +35,9 @@
 	<!-- 재료 js,css -->
 	<resources mapping="/js/material/**" location="/resources/js/material/"  />
 	<resources mapping="/css/material/**" location="/resources/css/material/" />
+	<!-- 발주 js,css -->
+	<resources mapping="/js/order/**" location="/resources/js/order/"  />
+	<resources mapping="/css/order/**" location="/resources/css/order/" />
 
 	<!-- 아래에 있는 것이 컨트롤러 설정 자세한 내용은 TestController파일 참고 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
