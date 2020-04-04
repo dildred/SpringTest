@@ -42,6 +42,16 @@ public class MaterialService {
 	public Integer inputMaterialData(MaterialDto material) {
 		log.info("data확인");
 		log.info(jsonPasing.ModelOnJson(material));
+		//Validation체크
+		Integer validationCheck = 0;
+		try {
+			validationCheck = materialRegistModifyValidation(material);
+		}catch(Exception e) {
+			return 1;
+		}
+		if(validationCheck.compareTo(2)==1) {
+			return validationCheck;
+		}
 		//중복 확인(재료명)
 		Integer i = materialDao.isMatName(material.getMatName());
 		if(i!=null && i==0) {
@@ -111,12 +121,28 @@ public class MaterialService {
 	public MaterialDto getMaterialData(String materialNo, String mateialName) {
 		return materialDao.getMaterialDataWithPrimaryKey(materialNo,mateialName);
 	}
+	/**
+	 * 데이터 호출 서비스. 재료 이름으로만 데이터를 호출한다.
+	 * */
+	public MaterialDto getMaterialData(String mateialName) {
+		return materialDao.getMaterialDataWithPrimaryKey(null,mateialName);
+	}
 
 	/**
 	 * 재료 변경 서비스<br>
 	 * 저장되어 있는 재료명과 재료 번호를 토대로 변경함
 	 * */
 	public Integer materialModifyProc(MaterialDto material) {
+		//Validation체크
+		Integer validationCheck = 0;
+		try {
+			validationCheck = materialRegistModifyValidation(material);
+		}catch(Exception e) {
+			return 1;
+		}
+		if(validationCheck.compareTo(2)==1) {
+			return validationCheck;
+		}
 		//데이터가 존재하는지 확인
 		if(materialDao.getMaterialDataWithPrimaryKey(material.getMatNo(),material.getMatName())==null) {
 			return 1;
@@ -125,6 +151,26 @@ public class MaterialService {
 			return 2;
 		} 
 		return 1;
+	}
+	
+	//데이터 입력 변경에 있어 문제가 있는지 체크(이름, 유닛, 스테이터스와 기타 등등)
+	public Integer materialRegistModifyValidation(MaterialDto material) throws Exception{
+		if(CodeMap.isEmpty(material.getMatName())) {
+			return 3;
+		}
+		if(CodeMap.isEmpty(material.getWeightUnit())) {
+			return 4;
+		}
+		if(CodeMap.isEmpty(material.getMatStatus())) {
+			return 5;
+		}
+		if(CodeMap.isSpecialChaReg(material.getMatName()) 
+				|| CodeMap.isSpecialChaReg(material.getWeightUnit())
+				|| CodeMap.isSpecialChaReg(material.getMatStatus())) {
+			return 6;
+		}
+		
+		return 0;
 	}
 
 }

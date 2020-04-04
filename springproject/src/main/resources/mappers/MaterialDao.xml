@@ -91,8 +91,12 @@
 			<include refid="notUpRegDateColumns"></include>
 		from 
 			material m 
-			where m.mat_no = #{matNo,jdbcType=VARCHAR} 
-			and m.mat_name = #{matName,jdbcType=VARCHAR}
+			where 
+			<if test="matNo!=null">
+			m.mat_no = #{matNo,jdbcType=VARCHAR} 
+			and 
+			</if>
+			m.mat_name = #{matName,jdbcType=VARCHAR}
 			and m.del_flg = '0'
 	</select>
 	

@@ -35,7 +35,8 @@
 <c:if test="${isRegMod eq 'modify'}">
 	<script type="text/javascript" src="<c:url value = "/js/material/material_modify.js"/>"></script>
 </c:if>
-
+<!-- css개별 처리 -->
+<link rel="stylesheet" href="<c:url value = "/css/material/material_regmodify.css"/>">
 
 </head>
 <body>
@@ -64,8 +65,25 @@
     <div class = "card-footer btn-group">
     <button id = "submitBtn" class = "btn btn-outline-primary"><c:if test="${isRegMod eq 'regist'}">등록</c:if><c:if test="${isRegMod eq 'modify'}">변경</c:if></button>
     <button id = "cancelBtn" class = "btn btn-outline-danger">취소</button></div>
+    <div class="modal fade" id = "popUpErrMsgDiaLog" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title text-danger font-weight-bold">Error</h5>
+	        <button type="button" class="popUpErrMsgCLose close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body" id = "errMsg">
+	        <p>에러 내용</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="popUpErrMsgCLose btn btn-secondary" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	 </div>
+	 </div>
 </div>
-<jsp:include page="/WEB-INF/views/jsp/process/footer.jsp"></jsp:include>
 <c:if test="${!empty modifyDto}">
     <input type="hidden" class="" id = "matNo" name = "matNo" value = "${modifyDto.matNo}">
 </c:if>
