@@ -35,4 +35,16 @@
 직원 가입날짜는 자동기입.
 직원 이메일은 최대 100자로 제한한다.
 
-사번,비밀번호,이름,나이,직위,전번,부서,급여,주민등록번호,학력,가입날짜,주소,이메일
+사번 = staffnumber
+이름 = name
+나이 = age
+직위 = position
+전번 = phonenumber
+주번 = idnumber
+부서 = department
+급여 = pay
+학력 = education
+이메일 = email
+주소 = address
+비밀번호
+가입날짜

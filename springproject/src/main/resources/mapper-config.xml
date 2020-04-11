@@ -24,6 +24,7 @@ MyBatis Mapper설정임
 	<typeAliases>
 		<typeAlias type="com.project.emp.dto.TestDto" alias="Test"/>
 		<typeAlias type="com.project.emp.dto.MaterialDto" alias="Material"/>
+		<typeAlias type="com.project.emp.dto.StaffDto" alias="Staff"/>
 	</typeAliases>
 
 </configuration>
