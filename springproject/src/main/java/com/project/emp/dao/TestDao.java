@@ -1,8 +1,6 @@
 package com.project.emp.dao;
 
 import org.apache.ibatis.annotations.Param;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.emp.dto.TestDto;
