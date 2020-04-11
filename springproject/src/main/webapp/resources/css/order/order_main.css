@@ -1,0 +1,23 @@
+@charset "UTF-8";
+#contents{
+	min-width : 1080px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="text"][disabled]{
+    background:#FFFFFF;
+}
+
+#sidebar{
+	max-width : 180px;
+	width : 16%;
+}
+#main_window{
+	max-width : 930px;
+	width : 84%;
+}

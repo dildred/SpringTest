@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.emp.dto.MaterialDto;
+import com.project.emp.other.CodeMap;
 import com.project.emp.service.MaterialService;
 
 /**
@@ -107,6 +108,23 @@ public class MaterialController {
 		model.addObject("isRegMod", "modify");
 		model.setViewName(defaultFolder+"material_regist");
 		return model;
+	}
+	
+	/**
+	 * 재료 변경 이름 입력시에 데이터 호출
+	 * */
+	@RequestMapping(value = "/modify", params="action=modi-data",method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<MaterialDto> modifyDataCall(ModelAndView model, @ModelAttribute("matName") String materialName) {
+		log.info("※========Material Modify Data 호출함=========※");
+		MaterialDto modifyData = null;
+		//이름 값이 비어있는지 체크
+		if(CodeMap.isEmpty(materialName)) {
+			return new ResponseEntity<MaterialDto>(modifyData,HttpStatus.BAD_REQUEST);
+		}
+		modifyData = materialService.getMaterialData(materialName);
+		
+		return new ResponseEntity<MaterialDto>(modifyData,HttpStatus.OK);
 	}
 
 	/**

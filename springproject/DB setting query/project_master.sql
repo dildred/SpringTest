@@ -24,3 +24,5 @@ values('W001','SALARY','ALBA','','9000',now(),'SYSTEM',now(),'SYSTEM');
 /*정직원 기본 월급(신입기준)*/
 insert into proj_master(m_cd,m_select1,m_select2,m_select3,m_value,regist_date,regist_user,update_date,update_user)
 values('W001','SALARY','EMPL','','2000000',now(),'SYSTEM',now(),'SYSTEM');
+
+commit;
