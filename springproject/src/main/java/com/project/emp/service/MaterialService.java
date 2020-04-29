@@ -32,14 +32,20 @@ public class MaterialService {
 	 * */
 	public List<String> getMaterialStatus() {
 		log.info("==========등록된 재료의 분류를 가져오겠습니다.==========");
-		return materialDao.getMaterialStatus("0");
+		try {
+            return materialDao.getMaterialStatus("0");
+        } catch (Exception e) {
+            //DB에러 발생시 데이터를 불러오지 못함;
+            log.error("DB에러 발생 위치 : getMaterialStatus");
+            return null;
+        }
 	}
 	
 	/**
 	 * 재료 등록 프로세스 서비스<br>
 	 * 재료를 등록함 => 미완성
 	 * */
-	public Integer inputMaterialData(MaterialDto material) {
+	public Integer registMaterialData(MaterialDto material) {
 		log.info("data확인");
 		log.info(jsonPasing.ModelOnJson(material));
 		//Validation체크
@@ -52,18 +58,23 @@ public class MaterialService {
 		if(validationCheck.compareTo(2)==1) {
 			return validationCheck;
 		}
-		//중복 확인(재료명)
-		Integer i = materialDao.isMatName(material.getMatName());
-		if(i!=null && i==0) {
-			return 0;
-		}
-		//matNo를 생성한다
-		String matNo = new SimpleDateFormat("YYYYMMddhhmmss").format(new Date());
-		material.setMatNo(matNo);
-		//재료 등록
-		i = materialDao.registMaterialData(material);
-		if(i==0) {
-			return 1;
+		try {
+		  //중복 확인(재료명)
+		    Integer i = materialDao.isMatName(material.getMatName());
+	        if(i!=null && i==0) {
+	            return 0;
+	        }
+	      //matNo를 생성한다
+	        String matNo = new SimpleDateFormat("YYYYMMddhhmmss").format(new Date());
+	        material.setMatNo(matNo);
+	        //재료 등록
+	        i = materialDao.registMaterialData(material);
+	        if(i==0) {
+	            return 1;
+	        }
+		}catch(Exception e) {
+		    log.error("DB에러 발생 위치 : registMaterialData");
+		    return 1;
 		}
 		return 2;
 	}
@@ -73,10 +84,16 @@ public class MaterialService {
 	 * 재료 리스트를 호출함
 	 * */
 	public List<MaterialDto> getMaterialList(String page) {
-		AutoPaging paging = getThisPaging(page);
-		List<MaterialDto> materialList = materialDao.getMaterialList(paging);
-		log.info(jsonPasing.ModelOnJson(materialList));
-		return materialList;
+		try {
+		    AutoPaging paging = getThisPaging(page);
+		    List<MaterialDto> materialList = materialDao.getMaterialList(paging);
+		    log.info(jsonPasing.ModelOnJson(materialList));
+	        return materialList;
+		}catch(Exception e) {
+		    //DB에러 발생시 호출하지 않음
+		    log.error("DB에러 발생 위치 : getMaterialList");
+		    return null;
+		}
 	}
 	
 	/**
@@ -97,7 +114,13 @@ public class MaterialService {
 		} else {
 			paging = new AutoPaging(1,10,10);
 		}
-		Integer listCount = materialDao.getListCount();
+		Integer listCount;
+        try {
+            listCount = materialDao.getListCount();
+        } catch (Exception e) {
+            log.error("DB에러 발생 위치 : getThisPaging");
+            listCount = 0;
+        }
 		paging.setListCount(listCount);
 		return paging;
 	}
@@ -106,11 +129,17 @@ public class MaterialService {
 	 * 재료 삭제 서비스<br>
 	 * 재료 데이터의 삭제플래그를 1로 만듬.
 	 * */
-	public Integer materialDelete(List<MaterialDto> materialList) {
+	public Integer deleteMaterialData(List<MaterialDto> materialList) {
 		int i = 0;
 		log.info("delete data size : "+materialList.size());
 		for(MaterialDto material : materialList) {
-			i = i + materialDao.deleteMaterial(material);
+		    try {
+		        i = i + materialDao.deleteMaterial(material);
+		    } catch(Exception e) {
+		        //에러 발생시 현재 트랜잭션을 멈추고 아무것도 지우지 않고 0으로 리턴
+		        log.error("DB에러 발생 위치 : deleteMaterialData");
+		        return 0;
+		    }
 		}
 		return i;
 	}
@@ -119,20 +148,30 @@ public class MaterialService {
 	 * 데이터 호출 서비스. 재료 번호와 재료 이름으로 데이터를 호출한다.
 	 * */
 	public MaterialDto getMaterialData(String materialNo, String mateialName) {
-		return materialDao.getMaterialDataWithPrimaryKey(materialNo,mateialName);
+		try {
+            return materialDao.getMaterialDataWithPrimaryKey(materialNo,mateialName);
+        } catch (Exception e) {
+            log.error("DB에러 발생 위치 : getMaterialData");
+            return null;
+        }
 	}
 	/**
 	 * 데이터 호출 서비스. 재료 이름으로만 데이터를 호출한다.
 	 * */
 	public MaterialDto getMaterialData(String mateialName) {
-		return materialDao.getMaterialDataWithPrimaryKey(null,mateialName);
+		try {
+            return materialDao.getMaterialDataWithPrimaryKey(null,mateialName);
+        } catch (Exception e) {
+            log.error("DB에러 발생 위치 : getMaterialData");
+            return null;
+        }
 	}
 
 	/**
 	 * 재료 변경 서비스<br>
 	 * 저장되어 있는 재료명과 재료 번호를 토대로 변경함
 	 * */
-	public Integer materialModifyProc(MaterialDto material) {
+	public Integer modifyMaterialProc(MaterialDto material) {
 		//Validation체크
 		Integer validationCheck = 0;
 		try {
@@ -144,12 +183,18 @@ public class MaterialService {
 			return validationCheck;
 		}
 		//데이터가 존재하는지 확인
-		if(materialDao.getMaterialDataWithPrimaryKey(material.getMatNo(),material.getMatName())==null) {
-			return 1;
+		try {
+    		if(materialDao.getMaterialDataWithPrimaryKey(material.getMatNo(),material.getMatName())==null) {
+    			return 1;
+    		}
+    		if(materialDao.updateMaterial(material)==1) {
+    			return 2;
+    		} 
+		}catch(Exception e) {
+		    //변경 서비스를 취소하고 에러코드 1 리턴
+		    log.error("DB에러 발생 위치 : modifyMaterialProc");
+		    return 1;
 		}
-		if(materialDao.updateMaterial(material)==1) {
-			return 2;
-		} 
 		return 1;
 	}
 	

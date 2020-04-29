@@ -2,6 +2,9 @@ package com.project.emp.dto;
 
 import java.io.Serializable;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("Test")
 public class TestDto extends AbstractDto implements Serializable {
 
 	/**

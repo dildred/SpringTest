@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스 -->
+<mapper namespace="com.project.emp.dao.OrderCompanyDao">
+	<cache />
+	<sql id="allColumns">
+	company_name, company_cd, company_tel, company_address, company_comment
+	</sql>
+
+	<select id="getCompanyToCompanyCd" parameterType="java.lang.String" resultMap="CompanyDataOnly">
+		select 
+			<include refid="allColumns"/>
+		from 
+			order_company 
+		where del_flg != '1' 
+		and company_cd = #{companyCd, jdbcType=VARCHAR}
+	</select>
+	
+	<resultMap type="OrderCompany" id="CompanyDataOnly">
+	<id column="company_cd" jdbcType="VARCHAR" property="companyCd"/>
+		<result column="company_name" jdbcType="VARCHAR" property="companyName"/>
+		<result column="company_tel" jdbcType="VARCHAR" property="companyTel"/>
+		<result column="company_address" jdbcType="VARCHAR" property="companyAddress"/>
+		<result column="company_comment" jdbcType="VARCHAR" property="companyComment"/>
+	</resultMap>
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스 -->
+<mapper namespace="com.project.emp.dao.MaterialOrderDao">
+	<cache />
+	<sql id="columns">
+		order_cd, mat_no, mat_name, order_qty, order_date, order_bill, company_cd, order_comment, regist_date, regist_user, update_date, update_user, update_cnt
+	</sql>
+
+	<insert id="registMatOrder" parameterType="MatOrder">
+		insert into mat_order(<include refid="columns"></include>)
+		values(#{orderCd},#{matNo},#{matName},#{orderQty},#{orderDate},#{orderBill},#{companyCd},#{orderComment},now(),'SYSTEM',now(),'SYSTEM','0')
+	</insert>
+
+</mapper>

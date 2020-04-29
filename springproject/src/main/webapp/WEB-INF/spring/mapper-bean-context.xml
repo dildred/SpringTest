@@ -15,5 +15,15 @@
 	<property name="mapperInterface" value="com.project.emp.dao.TestDao"></property>
 	<property name="sqlSessionTemplate" ref="sqlSession"></property>
 </bean>
+<!-- MaterialOrderDao -->
+<bean id="materialOrderDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.project.emp.dao.MaterialOrderDao"></property>
+	<property name="sqlSessionTemplate" ref="sqlSession"></property>
+</bean>
+<!-- MaterialOrderDao -->
+<bean id="orderCompanyDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.project.emp.dao.OrderCompanyDao"></property>
+	<property name="sqlSessionTemplate" ref="sqlSession"></property>
+</bean>
 
 </beans>

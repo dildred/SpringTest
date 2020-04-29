@@ -3,9 +3,12 @@ package com.project.emp.dto;
 import java.io.Serializable;
 import java.sql.Date;
 
+import org.apache.ibatis.type.Alias;
+
 /**
  * 재료 등록 테이블
  */
+@Alias("Material")
 public class MaterialDto extends AbstractDto implements Serializable  {
 	
 	private static final long serialVersionUID = 2053187505393042042L;

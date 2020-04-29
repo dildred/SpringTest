@@ -136,7 +136,7 @@ public class MaterialController {
 	@ResponseBody
 	public ResponseEntity<Integer> registProc(@RequestBody MaterialDto material) {
 		log.info("==========Material Regist 프로세스 실행==========");
-		Integer successCode = materialService.inputMaterialData(material);
+		Integer successCode = materialService.registMaterialData(material);
 		log.info("==========Material Regist 프로세스 실행 완료==========");
 		return new ResponseEntity<Integer>(successCode,HttpStatus.OK);
 	}
@@ -161,7 +161,7 @@ public class MaterialController {
 	@ResponseBody
 	public ResponseEntity<Integer> deleteProc(@RequestBody List<MaterialDto> materialList) {
 		log.info("==========Material Status DB호출==========");
-		Integer endNum = materialService.materialDelete(materialList);
+		Integer endNum = materialService.deleteMaterialData(materialList);
 		log.info("==========Material Status 호출 완료==========");
 		return new ResponseEntity<Integer>(endNum,HttpStatus.OK);
 	}
@@ -173,7 +173,7 @@ public class MaterialController {
 	@ResponseBody
 	public ResponseEntity<Integer> modifyProc(@RequestBody MaterialDto material) {
 		log.info("==========Material Modify 프로세스 실행==========");
-		Integer successCode = materialService.materialModifyProc(material);
+		Integer successCode = materialService.modifyMaterialProc(material);
 		log.info("==========Material Modify 프로세스 실행 완료==========");
 		return new ResponseEntity<Integer>(successCode,HttpStatus.OK);
 	}
