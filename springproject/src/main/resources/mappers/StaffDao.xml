@@ -10,3 +10,5 @@
 		insert into material(<include refid = "columns"></include>)
 		values()
 	</insert>
+	
+</mapper>	
