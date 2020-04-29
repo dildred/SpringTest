@@ -16,8 +16,10 @@ input[type="text"][disabled]{
 #sidebar{
 	max-width : 180px;
 	width : 16%;
+	float : left;
 }
 #main_window{
 	max-width : 930px;
 	width : 84%;
+	float : left;
 }

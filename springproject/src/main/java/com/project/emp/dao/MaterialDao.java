@@ -32,40 +32,40 @@ public interface MaterialDao {
 	 * 삭제되지 않은 재료 데이터의 재료 분류를 중복 없이 가져옴<br>
 	 * @param delFlg 삭제 플래그
 	 * */
-	public List<String> getMaterialStatus(@Param("delFlg") String delFlg);
+	public List<String> getMaterialStatus(@Param("delFlg") String delFlg) throws Exception;
 	/**
 	 * 재료를 등록한다.<br>
 	 * @param material 등록 DTO
 	 * */
-	public Integer registMaterialData(MaterialDto material);
+	public Integer registMaterialData(MaterialDto material) throws Exception;
 	/**
 	 * 중복된 재료명이 있는지 확인한다.<br>
 	 * @param matName 확인할 재료명
 	 * */
-	public Integer isMatName(@Param("matName") String matName);
+	public Integer isMatName(@Param("matName") String matName) throws Exception;
 	/**
 	 * 총 재료의 개수를 취득한다.
 	 * */
-	public Integer getListCount();
+	public Integer getListCount() throws Exception;
 	/**
 	 * 총 재료의 리스트를 취득한다.<br>
 	 * @param paging 페이지 해 놓은 것
 	 * */
-	public List<MaterialDto> getMaterialList(AutoPaging paging);
+	public List<MaterialDto> getMaterialList(AutoPaging paging) throws Exception;
 	/**
 	 * 재료를 삭제한다(삭제 플래그를 1로 해놓는다)<br>
 	 * @param material 기본키 2개 matNo, matName존재
 	 * */
-	public Integer deleteMaterial(MaterialDto material);
+	public Integer deleteMaterial(MaterialDto material) throws Exception;
 	/**
 	 * 기본 키를 이용하여 데이터 하나를 호출한다.<br>
 	 * @param materialNo 재료 번호, 
 	 * @param mateialName 재료 이름
 	 * */
-	public MaterialDto getMaterialDataWithPrimaryKey(@Param("matNo")String materialNo, @Param("matName")String mateialName);
+	public MaterialDto getMaterialDataWithPrimaryKey(@Param("matNo")String materialNo, @Param("matName")String mateialName) throws Exception;
 	/**
 	 * 기본 키를 이용하여 데이터를 수정한다.<br>
 	 * @param material 기본키 2개 matNo, matName존재
 	 * */
-	public Integer updateMaterial(MaterialDto material);
+	public Integer updateMaterial(MaterialDto material) throws Exception;
 }
