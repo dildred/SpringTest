@@ -35,16 +35,25 @@
 직원 가입날짜는 자동기입.
 직원 이메일은 최대 100자로 제한한다.
 
-사번 = staffnumber
-이름 = name
-나이 = age
-직위 = position
-전번 = phonenumber
-주번 = idnumber
-부서 = department
-급여 = pay
-학력 = education
-이메일 = email
-주소 = address
-비밀번호
-가입날짜
+사번 = staff_number
+비번 = staff_pw
+이름 = staff_name
+나이 = staff_age
+전번 = staff_tel
+주번 = staff_id_num
+이메일 = staff_email
+최종학력 = staff_end_degree
+부서 = staff_dep
+직급 = staff_level
+급여 = staff_pay
+직원 증명사진 = staff_family_file
+주소 = staff_address
+삭제 플래그 = del_flg
+등록일자 = staff_date
+------------------------
+등록사용자 = staff_user
+변경일자 = update_ddate
+변경사용자 = update_user
+변경횟수 = update_cnt
+가입날자 = registDate
+

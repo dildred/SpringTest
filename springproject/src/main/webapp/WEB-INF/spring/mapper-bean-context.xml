@@ -17,8 +17,8 @@
 </bean>
 
 <!-- StaffDao -->
-<bean id="StaffDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
-	<property name="mapperInterface" value="com.project.emp.dao.TestDao"></property>
+<bean id="staffDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.project.emp.dao.StaffDao"></property>
 	<property name="sqlSessionTemplate" ref="sqlSession"></property>
 </bean>
 

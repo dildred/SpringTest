@@ -36,7 +36,7 @@ public class StaffService {
 		}
 		
 		//중복 확인
-		Integer i = staffDao.isStaffNumber(staff.getStaffnumber());
+		Integer i = staffDao.isStaffNumber(staff.getStaff_number());
 		
 		
 		//직원 등록

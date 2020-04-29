@@ -14,5 +14,6 @@ update_user varchar(50) not null comment "변경 사용자",
 update_cnt integer default 0 comment "변경 횟수"
 ) engine=innodb charset=utf8mb4;
 
+
 /*기본키 설정 쿼리문*/
 alter table order_company add constraint pk_company_cd Primary key(company_cd, company_name);

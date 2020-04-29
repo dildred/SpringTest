@@ -4,10 +4,9 @@
 <mapper namespace="com.project.emp.dao.StaffDao">
 	<cache />
 	
-	
 	<!-- 직원 신규 등록 -->
 	<insert id = "registStaffData" parameterType="Staff">
-		insert into material(<include refid = "columns"></include>)
+		insert into staff
 		values()
 	</insert>
 	

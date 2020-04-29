@@ -22,8 +22,8 @@ public class StaffController {
 	//로그작성
 	private Logger log = LoggerFactory.getLogger(StaffController.class);
 	
-	// jsp파일 들어있는 폴더명
-	//private final String defaultForder = "jsp/staff/";
+	
+	private final String defaultForder = "jsp/staff/";
 	
 	@Autowired
 	private StaffService staffService;

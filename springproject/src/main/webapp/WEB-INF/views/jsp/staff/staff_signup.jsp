@@ -33,52 +33,52 @@
 </style>
 </head>
 <body>
-	<form method="post" action="./addstaff">
+	<form method="post" action="/addstaff">
 	<h1 class="text_center">사원 등록창</h1>
 	<table align="center">
 		<tr>
 			<td width="200"><p align="right">사번</td>
-			<td width="400"><input type="text" name="staffnumber"></td>
+			<td width="400"><input type="text" name="staff_number"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">이름</td>
-			<td width="400"><input type="text" name="name"></td>
+			<td width="400"><input type="text" name="staff_name"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">나이</td>
-			<td width="400"><input type="text" name="age"></td>
-		</tr>
-		<tr>
-			<td width="200"><p align="right">직위</td>
-			<td width="400"><input type="text" name="position"></td>
+			<td width="400"><input type="text" name="staff_age"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">전화번호</td>
-			<td width="400"><input type="text" name="phonenumber"></td>
+			<td width="400"><input type="text" name="staff_tel"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">주민등록번호</td>
-			<td width="400"><input type="text" name="idnumber"></td>
-		</tr>
-		<tr>
-			<td width="200"><p align="right">부서</td>
-			<td width="400"><input type="text" name="department"></td>
-		</tr>
-		<tr>
-			<td width="200"><p align="right">급여</td>
-			<td width="400"><input type="text" name="pay"></td>
-		</tr>
-		<tr>
-			<td width="200"><p align="right">학력</td>
-			<td width="400"><input type="text" name="education"></td>
+			<td width="400"><input type="text" name="staff_id_num"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">이메일</td>
-			<td width="400"><input type="text" name="email"></td>
+			<td width="400"><input type="text" name="staff_email"></td>
+		</tr>
+		<tr>
+			<td width="200"><p align="right">학력</td>
+			<td width="400"><input type="text" name="staff_end_degree"></td>
+		</tr>
+		<tr>
+			<td width="200"><p align="right">부서</td>
+			<td width="400"><input type="text" name="staff_dep"></td>
+		</tr>
+		<tr>
+			<td width="200"><p align="right">직급</td>
+			<td width="400"><input type="text" name="staff_level"></td>
+		</tr>
+		<tr>
+			<td width="200"><p align="right">급여</td>
+			<td width="400"><input type="text" name="staff_pay"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">주소</td>
-			<td width="400"><input type="text" name="address"></td>
+			<td width="400"><input type="text" name="staff_address"></td>
 		</tr>
 		<tr>
 			<td width="200"><p>&nbsp;</p></td>
