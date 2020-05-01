@@ -25,7 +25,10 @@
 <!-- BootStrap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<!-- 공통 처리 -->
+<script type="text/javascript" src="<c:url value = "/js/process/process_check.js"/>"></script>
+<!-- jsp개별 처리 -->
+<script type="text/javascript" src="<c:url value = "/js/staff/staff_insert.js"/>"></script>
 <style>
 	.text_center{
 		text-align:center;
@@ -35,54 +38,63 @@
 <body>
 	<form method="post" action="/addstaff">
 	<h1 class="text_center">사원 등록창</h1>
+<!-- 	<div id = "sampleForm">
+		<div class = "form-group">
+			<label for="staff_number">사번</label>
+			<input type="text" class = "form-control" id = "staff_number" name="staff_number">
+			<div id = "numErr" class = "text-danger" style = "display:none;">사원번호를 입력해 주세요.</div>
+		</div>
+	
+	</div> -->
 	<table align="center">
 		<tr>
 			<td width="200"><p align="right">사번</td>
-			<td width="400"><input type="text" name="staff_number"></td>
+			<td width="400"><input type="text" id = "staff_number" name="staff_number"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">이름</td>
-			<td width="400"><input type="text" name="staff_name"></td>
+			<td width="400"><input type="text" id = "staff_name" name="staff_name"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">나이</td>
-			<td width="400"><input type="text" name="staff_age"></td>
+			<td width="400"><input type="text" id = "staff_age" name="staff_age"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">전화번호</td>
-			<td width="400"><input type="text" name="staff_tel"></td>
+			<td width="400"><input type="text" id = "staff_tel" name="staff_tel"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">주민등록번호</td>
-			<td width="400"><input type="text" name="staff_id_num"></td>
+			<td width="400"><input type="text" id = "staff_id_num" name="staff_id_num"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">이메일</td>
-			<td width="400"><input type="text" name="staff_email"></td>
+			<td width="400"><input type="text" id = "staff_email" name="staff_email"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">학력</td>
-			<td width="400"><input type="text" name="staff_end_degree"></td>
+			<td width="400"><input type="text" id = "staff_end_degree" name="staff_end_degree"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">부서</td>
-			<td width="400"><input type="text" name="staff_dep"></td>
+			<td width="400"><input type="text" id = "staff_dep" name="staff_dep"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">직급</td>
-			<td width="400"><input type="text" name="staff_level"></td>
+			<td width="400"><input type="text" id = "staff_level" name="staff_level"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">급여</td>
-			<td width="400"><input type="text" name="staff_pay"></td>
+			<td width="400"><input type="text" id = "staff_pay" name="staff_pay"></td>
 		</tr>
 		<tr>
 			<td width="200"><p align="right">주소</td>
-			<td width="400"><input type="text" name="staff_address"></td>
+			<td width="400"><input type="text" id = "staff_address" name="staff_address"></td>
 		</tr>
 		<tr>
 			<td width="200"><p>&nbsp;</p></td>
-			<td width="400"><input type="submit" value="가입하기"><input type="reset" value="다시입력"></td>
+			<td width="400"><input type="button" value="가입하기" id="submitAdd">
+			<input type="reset" value="다시입력"></td>
 		</tr>
 		
 	</table>

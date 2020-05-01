@@ -9,115 +9,112 @@ import org.apache.ibatis.type.Alias;
 public class StaffDto extends AbstractDto implements Serializable	{
 		
 	
-		/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 		
 		//사번
-		private String staff_number;
+		private String staffNumber;
 		//이름
-		private String staff_name;
+		private String staffName;
 		//나이
-		private String staff_age;
+		private String staffAge;
 		//폰번호
-		private String staff_tel;
+		private String staffTel;
 		//주민번호
-		private String staff_id_num;
+		private String staffId_num;
 		//이메일
-		private String staff_email;
+		private String staffEmail;
 		//학력
-		private String staff_end_degree;
+		private String staffEnd_degree;
 		//부서
-		private String staff_dep;
+		private String staffDep;
 		//직급
-		private String staff_level;
+		private String staffLevel;
 		//급여
-		private String staff_pay;
+		private String staffPay;
 		//주소
-		private String staff_address;
-		//삭제 플래그
-		private Date staff_date;
+		private String staffAddress;
+		//삭제 플래그 <-이거땜인가?
+		private Date staffDate;
 		
-		public String getStaff_number() {
-			return staff_number;
+		
+		
+		public String getStaffNumber() {
+			return staffNumber;
 		}
-		public void setStaff_number(String staff_number) {
-			this.staff_number = staff_number;
+		public void setStaffNumber(String staffNumber) {
+			this.staffNumber = staffNumber;
 		}
-		public String getStaff_name() {
-			return staff_name;
+		public String getStaffName() {
+			return staffName;
 		}
-		public void setStaff_name(String staff_name) {
-			this.staff_name = staff_name;
+		public void setStaffName(String staffName) {
+			this.staffName = staffName;
 		}
-		public String getStaff_age() {
-			return staff_age;
+		public String getStaffAge() {
+			return staffAge;
 		}
-		public void setStaff_age(String staff_age) {
-			this.staff_age = staff_age;
+		public void setStaffAge(String staffAge) {
+			this.staffAge = staffAge;
 		}
-		public String getStaff_tel() {
-			return staff_tel;
+		public String getStaffTel() {
+			return staffTel;
 		}
-		public void setStaff_tel(String staff_tel) {
-			this.staff_tel = staff_tel;
+		public void setStaffTel(String staffTel) {
+			this.staffTel = staffTel;
 		}
-		public String getStaff_id_num() {
-			return staff_id_num;
+		public String getStaffId_num() {
+			return staffId_num;
 		}
-		public void setStaff_id_num(String staff_id_num) {
-			this.staff_id_num = staff_id_num;
+		public void setStaffId_num(String staffId_num) {
+			this.staffId_num = staffId_num;
 		}
-		public String getStaff_email() {
-			return staff_email;
+		public String getStaffEmail() {
+			return staffEmail;
 		}
-		public void setStaff_email(String staff_email) {
-			this.staff_email = staff_email;
+		public void setStaffEmail(String staffEmail) {
+			this.staffEmail = staffEmail;
 		}
-		public String getStaff_end_degree() {
-			return staff_end_degree;
+		public String getStaffEnd_degree() {
+			return staffEnd_degree;
 		}
-		public void setStaff_end_degree(String staff_end_degree) {
-			this.staff_end_degree = staff_end_degree;
+		public void setStaffEnd_degree(String staffEnd_degree) {
+			this.staffEnd_degree = staffEnd_degree;
 		}
-		public String getStaff_dep() {
-			return staff_dep;
+		public String getStaffDep() {
+			return staffDep;
 		}
-		public void setStaff_dep(String staff_dep) {
-			this.staff_dep = staff_dep;
+		public void setStaffDep(String staffDep) {
+			this.staffDep = staffDep;
 		}
-		public String getStaff_level() {
-			return staff_level;
+		public String getStaffLevel() {
+			return staffLevel;
 		}
-		public void setStaff_level(String staff_level) {
-			this.staff_level = staff_level;
+		public void setStaffLevel(String staffLevel) {
+			this.staffLevel = staffLevel;
 		}
-		public String getStaff_pay() {
-			return staff_pay;
+		public String getStaffPay() {
+			return staffPay;
 		}
-		public void setStaff_pay(String staff_pay) {
-			this.staff_pay = staff_pay;
+		public void setStaffPay(String staffPay) {
+			this.staffPay = staffPay;
 		}
-		public String getStaff_address() {
-			return staff_address;
+		public String getStaffAddress() {
+			return staffAddress;
 		}
-		public void setStaff_address(String staff_address) {
-			this.staff_address = staff_address;
+		public void setStaffAddress(String staffAddress) {
+			this.staffAddress = staffAddress;
 		}
-		public Date getStaff_date() {
-			return staff_date;
+		public Date getStaffDate() {
+			return staffDate;
 		}
-		public void setStaff_date(Date staff_date) {
-			this.staff_date = staff_date;
+		public void setStaffDate(Date staffDate) {
+			this.staffDate = staffDate;
 		}
 		public static long getSerialversionuid() {
 			return serialVersionUID;
 		}
 		
-		
-		
-		
+
 		
 		
 		

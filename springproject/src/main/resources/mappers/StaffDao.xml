@@ -3,11 +3,24 @@
 
 <mapper namespace="com.project.emp.dao.StaffDao">
 	<cache />
+	<sql id="columns">
+		staff_number, staff_pw, staff_name, staff_age, 
+		staff_tel, staff_id_num, staff_email, staff_end_degree, 
+		staff_dep, staff_level, staff_pay, staff_photo_file, 
+		staff_address, del_flg, staff_date, staff_user, 
+		update_date, update_user, update_cnt		
+	</sql>
+	
+	
 	
 	<!-- 직원 신규 등록 -->
-	<insert id = "registStaffData" parameterType="Staff">
-		insert into staff
-		values()
+	<insert id = "addStaffData" parameterType="Staff">
+		insert into staff(<include refid="columns"></include>)
+		values(#{staffNumber,jdbcType=VARCHAR},'0',#{staffName,jdbcType=VARCHAR},
+		#{staffAge,jdbcType=INTEGER},#{staffTel,jdbcType=VARCHAR},#{staffId_num,jdbcType=VARCHAR},
+		#{staffEmail,jdbcType=VARCHAR},#{staffEnd_degree,jdbcType=VARCHAR},#{staffDep,jdbcType=VARCHAR},
+		#{staffLevel,jdbcType=VARCHAR},#{staffPay,jdbcType=VARCHAR},'0',#{staffAddress,jdbcType=VARCHAR},
+		'0',now(),'SYSTEM',now(),'SYSTEM','0')
 	</insert>
 	
 </mapper>	

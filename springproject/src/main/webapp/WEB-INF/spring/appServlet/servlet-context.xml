@@ -44,6 +44,8 @@
 	<resources mapping="/js/order/**" location="/resources/js/order/"  />
 	<resources mapping="/css/order/**" location="/resources/css/order/" />
 
+	<!-- 회원가입 js -->
+	<resources mapping="/js/staff/**" location="/resources/js/staff/"  />
 	<!-- 아래에 있는 것이 컨트롤러 설정 자세한 내용은 TestController파일 참고 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

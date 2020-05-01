@@ -1,5 +1,7 @@
 package com.project.emp.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,37 +16,24 @@ public class StaffService {
 
 	@Autowired
 	private StaffDao staffDao;
+
 	
-	@Autowired
-	private JsonPasing<StaffDto> jsonPasing;
-	
+	 @Autowired private JsonPasing<StaffDto> jsonPasing;
+	 
+
 	private Logger log = LoggerFactory.getLogger(StaffService.class);
-	
-	
+
 	// 직원 등록
-	
-	public Integer inputStaffData(StaffDto staff) {
-		log.info("data확인");
-		log.info(jsonPasing.ModelOnJson(staff));
 		
-		//Validation 쳌
-		Integer validationCheck = 0;
-		
-		
-		if(validationCheck.compareTo(2)==1) {
-			return validationCheck;
+	public Integer registStaff(StaffDto staffDto) {
+		try {
+			System.out.println(staffDto);
+			staffDao.addStaffData(staffDto);
+		} catch (Exception e) {
+			log.error("DB에러 발생 위치 : addStaff");
+			return 2;
 		}
-		
-		//중복 확인
-		Integer i = staffDao.isStaffNumber(staff.getStaff_number());
-		
-		
-		//직원 등록
-		i = staffDao.registStaffDtoData(staff);
-		if(i==0) {
-			return 1;
-		}
-		return 2;
-		
+		return 1;
+
 	}
 }
