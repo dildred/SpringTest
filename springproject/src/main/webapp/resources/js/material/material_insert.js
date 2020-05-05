@@ -141,7 +141,7 @@ $(function(){
 		self.close();	
 	});
 	//팝업 에러메시지 창 클로즈 버튼 눌렀을 때(부트스트랩)
-	$(".popUpErrMsgCLose").on("click",function(){
+	$(".popUpErrMsgClose").on("click",function(){
 		$("#popUpErrMsgDiaLog").modal("hide");
 	})
 })

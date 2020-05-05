@@ -111,6 +111,16 @@ public class MaterialController {
 	}
 	
 	/**
+     * 재료 검색창 웹 페이지 호출
+     * */
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ModelAndView searchWndOpen(ModelAndView model) {
+        log.info("※========Material Search 호출함=========※");
+        model.setViewName(defaultFolder+"material_search(popup)");
+        return model;
+    }
+	
+	/**
 	 * 재료 변경 이름 입력시에 데이터 호출
 	 * */
 	@RequestMapping(value = "/modify", params="action=modi-data",method = RequestMethod.GET)

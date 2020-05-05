@@ -2,6 +2,7 @@
 /*테이블 생성 쿼리문*/
 create table mat_order(
 order_cd varchar(50) not null comment "발주 번호",
+order_no integer not null default '1' comment "발주 순번",
 mat_no varchar(50) not null comment "재료 번호",
 mat_name varchar(50) not null comment "발주 재료명",
 order_qty integer not null comment "발주 수량",
@@ -18,7 +19,7 @@ update_cnt integer default 0 comment "변경 횟수"
 ) engine=innodb charset=utf8mb4;
 
 /*기본키 설정 쿼리문*/
-alter table mat_order add constraint pk_order_cd Primary key(order_cd, mat_no, mat_name);
+alter table mat_order add constraint pk_order_cd Primary key(order_cd, order_no, mat_no, mat_name);
 alter table mat_order add constraint fk_company_cd foreign key(company_cd) references order_company(company_cd);
 alter table mat_order add constraint fk_mat_no foreign key(mat_no, mat_name) references material(mat_no, mat_name);
 /*패치했으므로 drop table해주세요*/

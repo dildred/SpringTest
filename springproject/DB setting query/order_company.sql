@@ -17,5 +17,5 @@ update_cnt integer default 0 comment "변경 횟수"
 /*기본키 설정 쿼리문*/
 alter table order_company add constraint pk_company_cd Primary key(company_cd);
 
-insert into order_company values ('sampleName','sample','sampleTel','sampleAddr','sampleCom','0',now(),'SYSTEM',now(),'SYSTEM','0');
+insert into order_company values ('sampleName','sample01','sampleTel','sampleAddr','sampleCom','0',now(),'SYSTEM',now(),'SYSTEM','0');
 commit;

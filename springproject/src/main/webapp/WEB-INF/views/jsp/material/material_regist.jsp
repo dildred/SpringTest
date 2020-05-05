@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" >
-<title>재료 등록</title>
+<title>재료 <c:if test="${isRegMod eq 'regist'}">등록</c:if><c:if test="${isRegMod eq 'modify'}">변경</c:if></title>
 <!-- 미 변경 목록(JQuery설정, BootStrap설정) -->
 <!-- JQuery -->
 <script
@@ -40,7 +40,6 @@
 
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/jsp/process/header.jsp"></jsp:include>
 <div id = "contents" class = "col-12 card">
 <!-- 자기자신을 호출하는 form만들었음 대신 POST방식으로 데이터를 전송시킬것임. -->
     <h3 class = "title card-header text-center">재료 <c:if test="${isRegMod eq 'regist'}">등록</c:if><c:if test="${isRegMod eq 'modify'}">변경</c:if></h3>
@@ -69,8 +68,8 @@
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title text-danger font-weight-bold">Error</h5>
-	        <button type="button" class="popUpErrMsgCLose close" data-dismiss="modal" aria-label="Close">
+	        <h5 class="modal-title text-danger font-weight-bold"></h5>
+	        <button type="button" class="popUpErrMsgClose close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
@@ -78,7 +77,7 @@
 	        <p>에러 내용</p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="popUpErrMsgCLose btn btn-secondary" data-dismiss="modal">닫기</button>
+	        <button type="button" class="popUpErrMsgClose btn btn-secondary" data-dismiss="modal">닫기</button>
 	      </div>
 	    </div>
 	 </div>

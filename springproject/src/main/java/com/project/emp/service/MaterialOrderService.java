@@ -42,13 +42,14 @@ public class MaterialOrderService {
                 materialOrderDto.setOrderCd(ordCd);
             } catch (Exception e) {
                 //matName이 존재하지 않는다면 지금까지 넣은 데이터 롤백
-                log.error("DB에러 발생 위치 : registMatOrder");
+                log.error("DB에러 발생 위치 : registMatOrder returning 2");
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return 2;
             }
             try {
                 materialOrderDao.registMatOrder(materialOrderDto);
             } catch (Exception e) {
+                log.error("DB에러 발생 위치 : registMatOrder returning 3");
                //모종의 에러(DB에러)로 데이터가 입력이 되지 않았을 때
                 return 3;
             }
