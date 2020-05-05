@@ -37,6 +37,12 @@ $(function() {
 			},
 			error : function(data) {
 				$.errMsgProc("데이터를 불러오는 중 에러가 발생하였습니다. 새로고침 해주세요.", "err")
+			},
+			beforeSend : function() {
+				$.loadingImgCall();
+			},
+			complete : function() {
+				$.loadingImgCallClose();
 			}
 		});
 	})
@@ -141,6 +147,12 @@ $(function() {
 			},
 			error : function(data) {
 				$.errMsgProc("데이터를 등록하던 중 에러가 발생하였습니다. 새로고침 해주세요.", "err");
+			},
+			beforeSend : function() {
+				$.loadingImgCall();
+			},
+			complete : function() {
+				$.loadingImgCallClose();
 			}
 		});
 

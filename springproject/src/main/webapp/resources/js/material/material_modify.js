@@ -36,12 +36,19 @@ $(function(){
 		},
 		error : function(data){
 			popErrMsgProc("비 정상적인 에러가 발생하였습니다. 재료 분류 로딩에 실패하였습니다.")
+		},
+		beforeSend : function() {
+			$.loadingImgCall();
+		},
+		complete : function() {
+			$.loadingImgCallClose();
 		}
 	});
 	
 	//재료 명 입력이 끝나면 재료 정보 가져오기
 	$("#matName").on("focusout",function(){
 		$matVal = $("#matName").val();
+		$("body").focus();
 		$.ajax({
 			type : 'GET', 
 			url : './modify?action=modi-data',
@@ -49,11 +56,14 @@ $(function(){
 			contentType : "application/json; charset=utf-8",
 			success : function(data){
 				if(data=="" || data==null){
+					popErrMsgProc("존재하지 않는 재료입니다. 다시 입력하여 주십시오.");
+					$("#matName").val("");
 					return false;
 				}
 				$matNo = $("body").append("<input type='hidden' class='' id = 'matNo' name = 'matNo' value = "+data.matNo+">");
 				$matName = $("#matName").val(data.matName);
 				$weightUnit = $("#weightUnit").val(data.weightUnit);
+				$("#weightUnit").prop("disabled",false);
 				$("#matStatus option[value="+data.matStatus+"]").prop('selected', 'selected').change();
 				$etcStatus = $("#etcStatus").val(data.matStatus);
 				$("#matName").prop("disabled",true);
@@ -62,6 +72,12 @@ $(function(){
 			error : function(data){
 				popErrMsgProc("비 정상적인 에러가 발생하였습니다. 재료 불러오기를 실패하였습니다.");
 				return false;
+			},
+			beforeSend : function() {
+				$.loadingImgCall();
+			},
+			complete : function() {
+				$.loadingImgCallClose();
 			}
 		});
 	});
@@ -173,6 +189,12 @@ $(function(){
 			error : function(data){
 				popErrMsgProc("비 정상적인 에러가 발생하였습니다. 재료 변경에 실패하였습니다.")
 				return false;
+			},
+			beforeSend : function() {
+				$.loadingImgCall();
+			},
+			complete : function() {
+				$.loadingImgCallClose();
 			}
 		});
 		return true;
@@ -183,4 +205,10 @@ $(function(){
 		opener.location.href="javascript:setRegistEnd(false)"
 			self.close();	
 	});
+	
 })
+function popErrMsgProc(errMsg){
+	var errorMessage = "<p>" + errMsg + "</p>"
+	$("#errMsg").html(errorMessage);
+	$("#popUpErrMsgDiaLog").modal("show");
+}

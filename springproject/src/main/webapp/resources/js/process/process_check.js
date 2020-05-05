@@ -43,6 +43,48 @@ $(function(){
 		};
 		$("#errMsgDiaLog").modal("show");
 	}
+	$.loadingImgCall = function(selector){
+		var width = 0;
+		var height = 0;
+		var black_width = $('body').width();
+		var black_height = $(window).height()-1;
+		var left = 0;
+		var top = 0;
+		width = 50;
+		height = 50;
+		top = ($(window).height() - height) / 2
+				+ $(window).scrollTop();
+		left = ($(window).width() - width) / 2
+				+ $(window).scrollLeft();
+		if ($("#loading_image").length != 0) {
+			$("#loading_image").css({
+				"top" : top + "px",
+				"left" : left + "px"
+			});
+			$("#loading_image").show();
+		} else {
+			$('body').append("<div id = 'loading_black_window' style='position:absolute; top: 0px; width:" +
+					black_width +
+					"px; height:" +
+					black_height +
+					"px; background-color:black; opacity:0.2; z-index:9998;'>")
+			$('body')
+					.append(
+							'<div id="loading_image" style="position:absolute; top:'
+							+ top
+							+ 'px; left:'
+							+ left
+							+ 'px; width:'
+							+ width
+							+ 'px; height:'
+							+ height
+							+ 'px; z-index:9999; margin:auto; padding:0; "><img src="/emp/img/loading.gif" style="width:50px; height:50px;"></div>');
+		}
+	}
+	$.loadingImgCallClose = function(){
+		$("#loading_image").remove();
+		$("#loading_black_window").remove();
+	}
 	
 	
 });

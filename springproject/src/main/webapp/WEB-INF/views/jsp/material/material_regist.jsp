@@ -50,7 +50,7 @@
     </div>
     <div class="form-group">
     <label for="weightUnit" class = "col-form-label col-form-label-sm pl-1">재료 중량 단위</label>
-    <input type="text" class="form-control form-control-sm" id = "weightUnit" name = "weightUnit" <c:if test="${!empty modifyDto}">value = "${modifyDto.weightUnit}" </c:if>>
+    <input type="text" class="form-control form-control-sm" id = "weightUnit" name = "weightUnit" <c:if test="${!empty modifyDto}">value = "${modifyDto.weightUnit}" </c:if> <c:if test="${isRegMod eq 'modify' && empty modifyDto}"> disabled </c:if> />
     </div>
     <div class="form-group">
     <label for="matStatus" class = "col-form-label col-form-label-sm pl-1">재료 분류</label>
@@ -68,7 +68,7 @@
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title text-danger font-weight-bold"></h5>
+	        <h5 class="modal-title text-danger font-weight-bold">Error</h5>
 	        <button type="button" class="popUpErrMsgClose close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

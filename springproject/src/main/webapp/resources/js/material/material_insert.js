@@ -26,6 +26,12 @@ $(function(){
 		},
 		error : function(data){
 			popErrMsgProc("비 정상적인 에러가 발생하였습니다. 재료 분류 로딩에 실패하였습니다.")
+		},
+		beforeSend : function() {
+			$.loadingImgCall();
+		},
+		complete : function() {
+			$.loadingImgCallClose();
 		}
 	});
 	
@@ -131,6 +137,12 @@ $(function(){
 			},
 			error : function(data){
 				popErrMsgProc("비 정상적인 에러가 발생하였습니다. 재료 등록에 실패하였습니다.")
+			},
+			beforeSend : function() {
+				$.loadingImgCall();
+			},
+			complete : function() {
+				$.loadingImgCallClose();
 			}
 		});
 	});

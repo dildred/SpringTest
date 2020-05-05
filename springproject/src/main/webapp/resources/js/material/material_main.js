@@ -13,83 +13,85 @@ $(function() {
 	listCount();
 	listCall();
 	$page = $("#pageInput");
-	
+
 	/**
 	 * 페이지 숫자 수동 조절시 리스트 호출(포커스가 끝났을 때 실행)
 	 */
 	$("#pageInput").on("focusout", listCall);
-	
+
 	/**
 	 * 삭제 버튼 클릭시 삭제 프로세스 호출
 	 */
-	$("#deleteBtn").on("click", function(){
+	$("#deleteBtn").on("click", function() {
 		$checkBox = $(".matCheck");
 		var checkCount = 0;
 		var checkArray = Array();
-		for(i=0;i < $checkBox.length;i++) {
+		for (i = 0; i < $checkBox.length; i++) {
 			var checkItem = Array();
-		    if ($checkBox[i].checked == true){
-		    	//matNo 재료 번호 취득
-		    	checkItem[0] = $checkBox.eq(i).val();
-		    	//matName 재료 이름 취득
-		    	checkItem[1] = $checkBox.eq(i).parent().next().text();
-		    	checkArray[checkCount] = checkItem;
-		        checkCount++;
-		    }
+			if ($checkBox[i].checked == true) {
+				// matNo 재료 번호 취득
+				checkItem[0] = $checkBox.eq(i).val();
+				// matName 재료 이름 취득
+				checkItem[1] = $checkBox.eq(i).parent().next().text();
+				checkArray[checkCount] = checkItem;
+				checkCount++;
+			}
 		}
-		if(checkCount == 0){
+		if (checkCount == 0) {
 			alert("삭제할 항목을 선택하여 주십시오.");
 			return false;
 		}
-		if(checkCount == 1){
-			if(confirm("해당 항목 "+checkArray[0][1]+"을(를) 정말로 삭제하시겠습니까?")){
+		if (checkCount == 1) {
+			if (confirm("해당 항목 " + checkArray[0][1] + "을(를) 정말로 삭제하시겠습니까?")) {
 				deleteProc(checkArray);
 				listCount();
 				listCall();
 			}
 			return false;
 		}
-		if(confirm("해당 항목 "+checkCount+"개를 정말로 삭제하시겠습니까?")){
+		if (confirm("해당 항목 " + checkCount + "개를 정말로 삭제하시겠습니까?")) {
 			deleteProc(checkArray);
 			listCount();
 			listCall();
 		}
 		return false;
 	});
-	
+
 	/**
 	 * 페이지 이전 버튼 클릭
 	 */
-	$("#prev").on("click",function(){
-		if(pageNumCheck($page.val(),"1")){
-			pageNum = ($page.val()*1-1);
+	$("#prev").on("click", function() {
+		if (pageNumCheck($page.val(), "1")) {
+			pageNum = ($page.val() * 1 - 1);
 			$page.val(pageNum);
 			listCount();
 			listCall();
 		}
-		
+
 	});
 	/**
 	 * 페이지 이후 버튼 클릭
 	 */
-	$("#next").on("click",function(){
-		if(pageNumCheck($page.val(),"2")){
-			pageNum = ($page.val()*1+1);
+	$("#next").on("click", function() {
+		if (pageNumCheck($page.val(), "2")) {
+			pageNum = ($page.val() * 1 + 1);
 			$page.val(pageNum);
 			listCount();
 			listCall();
 		}
 	});
-	
+
 })
 
-function pageNumCheck(pageval,isButton){
-	if((pageval == "1" && isButton == "1") || (pageval <= "0" && isButton=="3")){
+function pageNumCheck(pageval, isButton) {
+	if ((pageval == "1" && isButton == "1")
+			|| (pageval <= "0" && isButton == "3")) {
 		alert("첫 페이지 입니다");
 		$page.val(1);
 		return false;
 	}
-	if((pageval == pageCount && isButton == "2") || (pageval != "1" && pageval > pageCount && isButton=="3")){
+	if ((pageval == pageCount && isButton == "2")
+			|| (pageval != "1" && pageval > pageCount && isButton == "3")) {
 		alert("마지막 페이지 입니다");
 		$page.val($("#allPageCount").val());
 		return false;
@@ -101,17 +103,17 @@ function pageNumCheck(pageval,isButton){
  * 재료 팝업창 종료시 이벤트(등록을 해서 종료가 된 것인지 혹은 그냥 종료한 것인지)
  */
 function isRegistCheck(isWnd) {
-	//위에 적은 click.regist의 "regist"를 취득하기 위하여 사용함
+	// 위에 적은 click.regist의 "regist"를 취득하기 위하여 사용함
 	var isWndName = isWnd.handleObj.namespace;
 	if (isRegistEnd) {
-		if(isWndName=="regist"){
+		if (isWndName == "regist") {
 			alert("정상적으로 등록이 완료되었습니다");
 			if (confirm("이어서 등록하시겠습니까?")) {
 				registPopUp(isWnd);
 			} else {
 				isRegistEnd = false;
 			}
-		}else if(isWndName=="modify"){
+		} else if (isWndName == "modify") {
 			alert("정상적으로 수정이 완료되었습니다");
 		}
 		listCount();
@@ -123,33 +125,34 @@ function isRegistCheck(isWnd) {
  */
 function registPopUp(isWnd) {
 	var isWndName = isWnd.handleObj.namespace;
-	if(isWndName=="modify"){
+	if (isWndName == "modify") {
 		$checkBox = $(".matCheck");
 		var checkCount = 0;
 		var checkArray = Array();
-		for(i=0;i < $checkBox.length;i++) {
+		for (i = 0; i < $checkBox.length; i++) {
 			var checkItem = Array();
-		    if ($checkBox[i].checked == true){
-		    	//matNo 재료 번호 취득
-		    	checkItem[0] = $checkBox.eq(i).val();
-		    	//matName 재료 이름 취득
-		    	checkItem[1] = $checkBox.eq(i).parent().next().text();
-		    	checkArray[checkCount] = checkItem;
-		        checkCount++;
-		    }
+			if ($checkBox[i].checked == true) {
+				// matNo 재료 번호 취득
+				checkItem[0] = $checkBox.eq(i).val();
+				// matName 재료 이름 취득
+				checkItem[1] = $checkBox.eq(i).parent().next().text();
+				checkArray[checkCount] = checkItem;
+				checkCount++;
+			}
 		}
-		if(checkCount > 1){
+		if (checkCount > 1) {
 			alert("한 항목만 변경할 수 있습니다.");
 			return false;
 		}
-		if(checkCount == 1){
-			isWndName += "?matNo="+checkArray[0][0]+"&matName="+checkArray[0][1];
+		if (checkCount == 1) {
+			isWndName += "?matNo=" + checkArray[0][0] + "&matName="
+					+ checkArray[0][1];
 		}
-		
+
 	}
 	isRegistEnd = false;
 	var regPopup = window
-			.open('./material/'+isWndName, null,
+			.open('./material/' + isWndName, null,
 					'width=400,height=500,toolbar=no,scrollbars=no,menubar=no,resizable=no');
 
 	var interval = window.setInterval(function() {
@@ -163,86 +166,93 @@ function registPopUp(isWnd) {
 	}, 1000);
 }
 /**
- * 재료 팝업창 종료의 정상 종료 여부 
+ * 재료 팝업창 종료의 정상 종료 여부
  */
 function setRegistEnd(bool) {
 	isRegistEnd = bool;
 }
-//start확인용 변수
+// start확인용 변수
 var isInit = false;
 /**
  * 리스트 가져오기(html형식으로 가져오기)
  */
 var pageNum = 1;
-function listCall(){
-	if(isInit){
+function listCall() {
+	if (isInit) {
 		pageNum = $("#pageInput").val();
-		if(!pageNumCheck(pageNum*1,"3")){
+		if (!pageNumCheck(pageNum * 1, "3")) {
 			return false;
-		};
+		}
+		;
 	}
 	$.ajax({
-		type : 'GET', 
-		url : './material/list-proc',
-		data : 'page='+pageNum,
-		dataType : 'html',
-		contentType : "html; charset=utf-8",
-		success : function(data){
-			//console.log(data);
-			$("#material_list").html(data);
-			isInit = true;
-		},
-		error : function(data){
-			console.log("비 정상적인 에러가 발생하였습니다. 재료 리스트 로딩에 실패하였습니다.")
-		}
-	});
+				type : 'GET',
+				url : './material/list-proc',
+				data : 'page=' + pageNum,
+				dataType : 'html',
+				contentType : "html; charset=utf-8",
+				success : function(data) {
+					// console.log(data);
+					$("#material_list").html(data);
+					isInit = true;
+				},
+				error : function(data) {
+					console.log("비 정상적인 에러가 발생하였습니다. 재료 리스트 로딩에 실패하였습니다.")
+				},
+				beforeSend : function() {
+					$.loadingImgCall();
+				},
+				complete : function() {
+					$.loadingImgCallClose();
+				}
+
+			});
 }
 /**
  * 카운트 가져오기(text형식으로 가져오기)
  */
 var pageCount = 1;
-function listCount(){
+function listCount() {
 	$.ajax({
-		type : 'GET', 
+		type : 'GET',
 		url : './material/list-count',
 		dataType : 'text',
 		contentType : "text/plain; charset=utf-8",
-		success : function(data){
-			//console.log(data);
-			pageCount = data*1;
+		success : function(data) {
+			// console.log(data);
+			pageCount = data * 1;
 			$("#allPageCount").val(pageCount);
 		},
-		error : function(data){
+		error : function(data) {
 			console.log("비 정상적인 에러가 발생하였습니다. 재료 리스트 로딩에 실패하였습니다.")
 		}
 	});
 }
 
-function deleteProc(arrayData){
+function deleteProc(arrayData) {
 	var jsonData = Array();
-	for(var i = 0; i <arrayData.length ; i++){
+	for (var i = 0; i < arrayData.length; i++) {
 		var datas = {
-				"matNo" : arrayData[i][0],
-				"matName" : arrayData[i][1]
-			}
+			"matNo" : arrayData[i][0],
+			"matName" : arrayData[i][1]
+		}
 		jsonData[i] = datas;
 	}
 	$.ajax({
-		type : 'POST', 
+		type : 'POST',
 		url : './material/delete-proc',
 		data : JSON.stringify(jsonData),
 		dataType : 'json',
 		contentType : "application/json; charset=utf-8",
-		success : function(data){
-			//console.log(data);
+		success : function(data) {
+			// console.log(data);
 			alert(data + " 개의 데이터를 정상적으로 삭제하였습니다!");
 			listCount();
 			listCall();
 		},
-		error : function(data){
+		error : function(data) {
 			console.log("비 정상적인 에러가 발생하였습니다. 재료 삭제에 실패하였습니다.")
 		}
 	});
-	
-}
 
+}
