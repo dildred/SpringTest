@@ -19,6 +19,8 @@ public class MaterialOrderDto extends AbstractDto implements Serializable  {
     
     /**발주 주문 번호*/
     private String orderCd;
+    /**발주 내력 번호*/
+    private Integer orderNo;
     /**재료 번호*/
     private String matNo;
     /**재료 이름*/
@@ -44,6 +46,12 @@ public class MaterialOrderDto extends AbstractDto implements Serializable  {
     }
     public void setOrderCd(String orderCd) {
         this.orderCd = orderCd;
+    }
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
     public String getMatNo() {
         return matNo;

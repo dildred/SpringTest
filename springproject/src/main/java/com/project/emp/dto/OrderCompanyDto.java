@@ -56,6 +56,12 @@ public class OrderCompanyDto extends AbstractDto implements Serializable {
     public void setCompanyComment(String companyComment) {
         this.companyComment = companyComment;
     }
+    public void convertToMaterialOrderDto(MaterialOrderDto materialOrderDto) {
+        this.companyCd = materialOrderDto.getCompanyCd();
+        this.companyName = materialOrderDto.getCompanyName();
+        this.companyAddress = materialOrderDto.getCompanyAddress();
+        this.companyTel = materialOrderDto.getCompanyTel();
+    }
     
     
 }

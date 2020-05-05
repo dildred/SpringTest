@@ -16,4 +16,10 @@ public interface OrderCompanyDao {
      * */
     public OrderCompanyDto getCompanyToCompanyCd(@Param("companyCd") String companyCd) throws Exception;
 
+    /**
+     * 발주 회사의 정보를 등록함<br>
+     * @param companyInfo 발주 회사 데이터
+     * */
+    public Integer registOrderCompany(OrderCompanyDto companyInfo) throws Exception;
+
 }

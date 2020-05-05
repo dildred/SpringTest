@@ -4,12 +4,34 @@
 <mapper namespace="com.project.emp.dao.MaterialOrderDao">
 	<cache />
 	<sql id="columns">
-		order_cd, mat_no, mat_name, order_qty, order_date, order_bill, company_cd, order_comment, regist_date, regist_user, update_date, update_user, update_cnt
+		order_cd, order_no, mat_no, mat_name, order_qty, order_date, order_bill, company_cd, order_comment, regist_date, regist_user, update_date, update_user, update_cnt
 	</sql>
 
+	<!-- 발주 내역 등록 -->
 	<insert id="registMatOrder" parameterType="MatOrder">
 		insert into mat_order(<include refid="columns"></include>)
-		values(#{orderCd},#{matNo},#{matName},#{orderQty},#{orderDate},#{orderBill},#{companyCd},#{orderComment},now(),'SYSTEM',now(),'SYSTEM','0')
+		values(#{orderCd},#{orderNo},#{matNo},#{matName},#{orderQty},#{orderDate},#{orderBill},#{companyCd},#{orderComment},now(),'SYSTEM',now(),'SYSTEM','0')
 	</insert>
+	
+	<!-- 발주 번호에 있는 번호 중 내역 가장 큰 번호 가져오기 -->
+	<select id="getBiggestMaterialOrdNoToOrdCd" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select 
+			max(order_no) 
+		from 
+			mat_order 
+		where
+			order_cd = #{ordCd, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 발주가 존재하는지 확인하는 쿼리 -->
+	<select id="existingDataToOrdCdAndName" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select 
+				1 as exist
+			from
+				mat_order
+			where
+				order_cd = #{ordCd, jdbcType=VARCHAR}
+				and mat_name = #{matName, jdbcType=VARCHAR} 
+	</select>
 
 </mapper>

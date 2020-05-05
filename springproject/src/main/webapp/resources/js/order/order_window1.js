@@ -135,7 +135,6 @@ $(function() {
 			}
 			jsonData[i] = datas;
 		}
-		return false;
 		console.log(jsonData);
 		$.ajax({
 			type : 'POST',

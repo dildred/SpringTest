@@ -24,4 +24,43 @@
 		<result column="company_comment" jdbcType="VARCHAR" property="companyComment"/>
 	</resultMap>
 
+	<insert id="registOrderCompany" parameterType="OrderCompany">
+		insert into 
+			order_company(
+			company_cd,
+			company_name,
+			<if test="companyTel != null">
+			company_tel,
+			</if>
+			<if test="companyAddress != null">
+			company_address,
+			</if>
+			<if test="companyComment != null">
+			company_comment,
+			</if>
+			regist_date,
+			regist_user,
+			update_date,
+			update_user
+			) values(
+			#{companyCd, jdbcType=VARCHAR},
+			#{companyName, jdbcType=VARCHAR},
+			<if test="companyTel != null">
+			#{companyTel, jdbcType=VARCHAR},
+			</if>
+			<if test="companyAddress != null">
+			#{companyAddress, jdbcType=VARCHAR},
+			</if>
+			<if test="companyComment != null">
+			#{companyComment, jdbcType=VARCHAR},
+			</if>
+			now(),
+			'SYSTEM',
+			now(),
+			'SYSTEM'
+			)
+				
+	
+	</insert>
+
 </mapper>
