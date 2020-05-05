@@ -8,8 +8,8 @@
 	<!-- mariaDb연동 디비 만들어서 디비 설정해야하므로 아직 아무것도 안적어놓음; 나중에 정해지면 작성하는 것으로..-->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mariadb://localhost:3306/sppro"></property>
-        <property name="username" value="sppro"></property>
+        <property name="url" value="jdbc:mariadb://root.cfudqpsuanql.us-east-2.rds.amazonaws.com:3306/project_emp"></property>
+        <property name="username" value="emp"></property>
         <property name="password" value="test"></property>
     </bean>
 

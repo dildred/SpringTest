@@ -33,6 +33,10 @@ public class MaterialOrderDto extends AbstractDto implements Serializable  {
     private String companyName;
     /**발주 회사 코드*/
     private String companyCd;
+    /**발주 회사 전화번호*/
+    private String companyTel;
+    /**발주 회사 주소*/
+    private String companyAddress;
     /**발주 코멘트*/
     private String orderComment;
     public String getOrderCd() {
@@ -76,6 +80,18 @@ public class MaterialOrderDto extends AbstractDto implements Serializable  {
     }
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+    public String getCompanyTel() {
+        return companyTel;
+    }
+    public void setCompanyTel(String companyTel) {
+        this.companyTel = companyTel;
+    }
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
     }
     public String getCompanyCd() {
         return companyCd;
