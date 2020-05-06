@@ -30,11 +30,11 @@
 			삭제
 			</th>
 		</tr>	
-		<tr class = "matList">
+		<tr class = "matList"  id="list1">
 			<td><input type = "text"  class = "matName" name ="matName"></td>
-			<td><input type = "number" min="1"  class = "orderQty" name ="orderQty"></td>
-			<td><input type = "number" min="0" step="100" class = "orderBill" name ="orderBill"></td>
-			<td><input type = "text" class = "orderComment" name ="orderComment" maxlength="100"></td>
+			<td><input type = "number" min="1"  class = "orderQty" name ="orderQty" disabled><span class="weiUnit"></span></td>
+			<td><input type = "number" min="0" step="100" class = "orderBill" name ="orderBill"  disabled></td>
+			<td><input type = "text" class = "orderComment" name ="orderComment" maxlength="100"  disabled></td>
 			<td><input type = "button" value = "-" class="listMinusBtn"></td>
 		</tr>	
 		</table>

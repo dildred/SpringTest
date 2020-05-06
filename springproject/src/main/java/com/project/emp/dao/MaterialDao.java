@@ -68,4 +68,10 @@ public interface MaterialDao {
 	 * @param material 기본키 2개 matNo, matName존재
 	 * */
 	public Integer updateMaterial(MaterialDto material) throws Exception;
+	
+	/**
+     * 해당 재료 명으로 시작하는 모든 재료를 검색한다.
+     * @param materialName 검색할 재료명
+     * */
+    public List<MaterialDto> getMaterialSearchData(@Param("matName") String materialName) throws Exception;
 }

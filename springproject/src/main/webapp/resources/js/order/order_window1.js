@@ -142,7 +142,21 @@ $(function() {
 			data : JSON.stringify(jsonData),
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-
+				if(data.success!=null){
+					$("#companyCd").prop("disabled",true);
+					$("#companyName").prop("disabled",true);
+					$("#companyTel").prop("disabled",true);
+					$("#companyAddress").prop("disabled",true);
+					$("#orderDate").prop("disabled",true);
+					$(".matName").prop("disabled",true);
+					$(".orderQty").prop("disabled",true);
+					$(".orderBill").prop("disabled",true);
+					$(".orderComment").prop("disabled",true);
+					$.errMsgProc(data.success, "suc");
+				}
+				if(data.error!=null){
+					$.errMsgProc(data.error, "err");
+				}
 			},
 			error : function(data) {
 				$.errMsgProc("데이터를 등록하던 중 에러가 발생하였습니다. 새로고침 해주세요.", "err");
@@ -164,16 +178,27 @@ $(function() {
 			return false;
 		}
 		var ListData = "<tr class = 'matList'><td><input type = 'text'  class = 'matName' name ='matName'></td>"+
-			"<td><input type = 'number' min='1'  class = 'orderQty' name ='orderQty'></td>"+
-			"<td><input type = 'number' min='0' step='100' class = 'orderBill' name ='orderBill'></td>"+
-			"<td><input type = 'text' class = 'orderComment' name ='orderComment' maxlength='100'></td>"+
+			"<td><input type = 'number' min='1'  class = 'orderQty' name ='orderQty' disabled><span class='weiUnit'></span></td>"+
+			"<td><input type = 'number' min='0' step='100' class = 'orderBill' name ='orderBill' disabled></td>"+
+			"<td><input type = 'text' class = 'orderComment' name ='orderComment' maxlength='100' disabled></td>"+
 			"<td><input type = 'button' value = '-' class='listMinusBtn'></td></tr>"
 			$("#listTable").append(ListData);
-			
+		listNumAddition();
 	});
+	
+	//재료 구분 리스트에 아이디 추가
+	function listNumAddition(){
+		for(var i = 1; i < $(".matList").length+1; i++){
+			$(".matList").eq(i-1).attr("id","list"+i);
+		}
+	}
+	
+	//재료 이름을 클릭했을 때
 	$(document).on("click",".matName",function(){
 		var regPopup = window
-		.open('./material/search', null,
+		var listNo = $(this).parents(".matList").attr("id");
+		console.log(listNo);
+		window.open('./material/search?list='+listNo, null,
 				'width=400,height=500,toolbar=no,scrollbars=no,menubar=no,resizable=no');
 		
 	})
@@ -185,7 +210,7 @@ $(function() {
 			return false;
 		}
 		$(this).parents(".matList").remove();
-			
+		listNumAddition();
 	});
 
 	function companyCdValidation(companyCd) {

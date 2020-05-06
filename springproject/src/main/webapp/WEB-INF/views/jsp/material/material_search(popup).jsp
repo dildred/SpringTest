@@ -38,33 +38,33 @@
 <script type="text/javascript"
 	src="<c:url value = "/js/process/process_check.js"/>"></script>
 <script type="text/javascript"
-	src="<c:url value = "/js/material/material_insert.js"/>"></script>
-
+	src="<c:url value = "/js/material/material_search.js"/>"></script>
 <!-- css개별 처리 -->
-<link rel="stylesheet"
-	href="<c:url value = "/css/material/material_regmodify.css"/>">
+<link rel="stylesheet" href="<c:url value = "/css/material/material_search.css"/>">
 
 </head>
 <body>
-	<div id="contents" class="col-12 card">
+	<div id="contents" class="col-12 card fixed-top">
 		<!-- 자기자신을 호출하는 form만들었음 대신 POST방식으로 데이터를 전송시킬것임. -->
 		<h3 class="title card-header text-center">재료 검색</h3>
 		<div class="card-body mx-auto">
 			<div class="form-row align-items-center">
 				<div class="col-auto">
 					<input type="text" class="form-control col-md-4 sm-3" id="matName"
-						name="matName">
+						name="matName" placeholder="재료명을 입력해주세요">
 				</div>
 				<div class="col-auto">
-					<button id="submitBtn" class="btn btn-outline-primary col-md-2">검색</button>
+					<button id="searchBtn" class="btn btn-outline-primary col-md-2">검색</button>
 				</div>
 			</div>
-			<div class="modal fade" id="popUpErrMsgDiaLog" tabindex="-1"
+		</div>
+	</div>
+	<div class="modal fade" id="popUpErrMsgDiaLog" tabindex="-1"
 				role="dialog">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title text-danger font-weight-bold"></h5>
+							<h5 class="modal-title text-danger font-weight-bold">Error</h5>
 							<button type="button" class="popUpErrMsgClose close"
 								data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
@@ -80,11 +80,9 @@
 					</div>
 				</div>
 			</div>
+	<div id = "searchResultList">
+				
 		</div>
-	</div>
-	<c:if test="${!empty modifyDto}">
-		<input type="hidden" class="" id="matNo" name="matNo"
-			value="${modifyDto.matNo}">
-	</c:if>
+		<input type ="hidden" id = "selectListNum" value ="${list }">
 </body>
 </html>

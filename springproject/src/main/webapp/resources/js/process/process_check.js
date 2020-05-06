@@ -27,6 +27,12 @@ $(function(){
 				$("#diaLogInformation").removeClass("text-danger text-warning");
 				$("#diaLogInformation").addClass("text-success");
 				break;
+			case "suc" :
+			case "success" :
+				$("#diaLogInformation").text("Success");
+				$("#diaLogInformation").removeClass("text-danger text-warning");
+				$("#diaLogInformation").addClass("text-success");
+				break;
 			case "info" :
 			case "information" :
 				$("#diaLogInformation").text("Info");

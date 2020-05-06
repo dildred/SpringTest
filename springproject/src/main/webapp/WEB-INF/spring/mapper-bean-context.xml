@@ -25,6 +25,11 @@
 	<property name="mapperInterface" value="com.project.emp.dao.OrderCompanyDao"></property>
 	<property name="sqlSessionTemplate" ref="sqlSession"></property>
 </bean>
+<!-- MasterDao -->
+<bean id="masterDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.project.emp.dao.MasterDao"></property>
+	<property name="sqlSessionTemplate" ref="sqlSession"></property>
+</bean>
 
 <!-- StaffDao -->
 <bean id="staffDao" class="org.mybatis.spring.mapper.MapperFactoryBean">

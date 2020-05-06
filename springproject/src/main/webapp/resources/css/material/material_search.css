@@ -1,0 +1,21 @@
+@charset "UTF-8";
+#fixedBox{
+	height:188.2px;
+}
+tr, thead, tbody, table{
+	width:100%;
+}
+tr th{
+	width: 133.4px;
+}
+tr td{
+	width: 33%;
+	vertical-align:middle!important;
+}
+#head-fixed{
+	top:138.6px;
+	position:fixed;
+}
+.selectOne{
+	width:110px;	
+}

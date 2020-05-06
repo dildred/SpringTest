@@ -1,6 +1,8 @@
 package com.project.emp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,11 +70,12 @@ public class MaterialOrderController {
      * */
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Integer> registMaterialOrder(@RequestBody List<MaterialOrderDto> materialOrderDtoList) {
+    public ResponseEntity<HashMap<String, String>> registMaterialOrder(@RequestBody List<MaterialOrderDto> materialOrderDtoList) {
         log.info("※========Order Regist Process 호출함=========※");
         Integer successCode = materialOrderService.registMatOrder(materialOrderDtoList);
+        HashMap<String, String> resultMap = materialOrderService.registOrderServiceResultMap(successCode);
         log.info("==========Material Regist 프로세스 실행 완료==========");
-        return new ResponseEntity<Integer>(successCode,HttpStatus.OK);
+        return new ResponseEntity<HashMap<String, String>>(resultMap,HttpStatus.OK);
     }
     
     /**

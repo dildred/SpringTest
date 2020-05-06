@@ -114,9 +114,27 @@ public class MaterialController {
      * 재료 검색창 웹 페이지 호출
      * */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public ModelAndView searchWndOpen(ModelAndView model) {
+    public ModelAndView searchWndOpen(ModelAndView model, @RequestParam(value = "list") String listNo) {
         log.info("※========Material Search 호출함=========※");
+        if(listNo.startsWith("list")) {
+            //에러 페이지 호출(추후 제작생각)
+        }
+        model.addObject("list", listNo);
         model.setViewName(defaultFolder+"material_search(popup)");
+        return model;
+    }
+    
+    /**
+     * 재료 검색버튼 입력시 처리
+     * */
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView materialSearchProc(ModelAndView model, @RequestParam(value = "matName", defaultValue = "") String materialName) {
+        log.info("※========Material Search Process 실행=========※");
+        List<MaterialDto> material = materialService.getSearchMaterialData(materialName);
+        model.addObject("materialList", material);
+        model.setViewName(defaultFolder+"search_list");
+        log.info("※========Material Search Process 실행 완료=========※");
         return model;
     }
 	

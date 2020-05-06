@@ -125,4 +125,13 @@
 		and m.del_flg = '0'
 	</update>
 	
+	<!-- 재료 검색 하기 -->
+	<select id="getMaterialSearchData" resultMap="materialOneData">
+		select <include refid="notUpRegDateColumns"></include>
+			from 
+			material m 
+			where m.mat_name like CONCAT('%',#{matName,jdbcType=VARCHAR},'%')
+			and m.del_flg = '0'
+	</select>
+	
 </mapper>

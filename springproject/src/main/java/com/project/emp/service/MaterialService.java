@@ -158,9 +158,9 @@ public class MaterialService {
 	/**
 	 * 데이터 호출 서비스. 재료 이름으로만 데이터를 호출한다.
 	 * */
-	public MaterialDto getMaterialData(String mateialName) {
+	public MaterialDto getMaterialData(String materialName) {
 		try {
-            return materialDao.getMaterialDataWithPrimaryKey(null,mateialName);
+            return materialDao.getMaterialDataWithPrimaryKey(null,materialName);
         } catch (Exception e) {
             log.error("DB에러 발생 위치 : getMaterialData");
             return null;
@@ -217,5 +217,17 @@ public class MaterialService {
 		
 		return 0;
 	}
+	
+	/**
+     * 데이터 검색 서비스. 재료 이름으로 해당하는 데이터를 모두 검색한다.
+     * */
+    public List<MaterialDto> getSearchMaterialData(String materialName) {
+        try {
+            return materialDao.getMaterialSearchData(materialName);
+        } catch (Exception e) {
+            log.error("DB에러 발생 위치 : getSearchMaterialData");
+            return null;
+        }
+    }
 
 }

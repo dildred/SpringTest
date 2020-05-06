@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스 -->
+<mapper namespace="com.project.emp.dao.MasterDao">
+	<cache />
+	
+	<select id="getValue" parameterType="java.lang.String" resultType="java.lang.String"> 
+		select m_value
+			 from proj_master
+			where
+			 m_cd = #{mCd, jdbcType=VARCHAR}
+			 <if test="key1!=null">and m_select1 = #{key1, jdbcType=VARCHAR}</if>
+			 <if test="key2!=null">and m_select2 = #{key2, jdbcType=VARCHAR}</if>
+			 <if test="key3!=null">and m_select3 = #{key3, jdbcType=VARCHAR}</if>
+			 limit 1
+	</select>
+	
+	<select id="getValues" parameterType="java.lang.String" resultType="java.lang.String"> 
+		select m_value
+			 from proj_master
+			where
+			 m_cd = #{mCd, jdbcType=VARCHAR}
+			 <if test="key1!=null">and m_select1 = #{key1, jdbcType=VARCHAR}</if>
+			 <if test="key2!=null">and m_select2 = #{key2, jdbcType=VARCHAR}</if>
+			 <if test="key3!=null">and m_select3 = #{key3, jdbcType=VARCHAR}</if>
+	</select>
+	
+	
+
+</mapper>
