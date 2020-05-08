@@ -2,7 +2,9 @@
  * 발주 처리 JS파일
  */
 $(function() {
-
+	//발주 완료를 확인하는 변수
+	var isOrderEnd = false;
+	
 	var companyCd = "--------------";
 	//발주 내역 등록 버튼의 발주 회사 코드 입력시
 	$(document).on("focusout", "#companyCd", function() {
@@ -63,6 +65,10 @@ $(function() {
 	}
 	//발주 이력 등록 버튼을 눌렀을 시에
 	$(document).on("click", "#submitBtn", function() {
+		if(isOrderEnd){
+			$.errMsgProc("이미 완료된 발주입니다.", "err");
+			return false;
+		}
 		var jsonData = Array();
 		$companyCd = $("#companyCd").val();
 		//회사코드가 입력이 안되어 있다면
@@ -143,6 +149,7 @@ $(function() {
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
 				if(data.success!=null){
+					isOrderEnd = true;
 					$("#companyCd").prop("disabled",true);
 					$("#companyName").prop("disabled",true);
 					$("#companyTel").prop("disabled",true);
@@ -173,15 +180,20 @@ $(function() {
 	
 	//발주 리스트 추가 버튼을 클릭시
 	$(document).on("click", "#listPlusBtn", function(){
+		if(isOrderEnd){
+			return false;
+		}
 		if($(".matList").length >= 10){
 			$.errMsgProc("발주 목록은 최대 10개까지 한 번에 입력 가능합니다.", "info");
 			return false;
 		}
-		var ListData = "<tr class = 'matList'><td><input type = 'text'  class = 'matName' name ='matName'></td>"+
-			"<td><input type = 'number' min='1'  class = 'orderQty' name ='orderQty' disabled><span class='weiUnit'></span></td>"+
-			"<td><input type = 'number' min='0' step='100' class = 'orderBill' name ='orderBill' disabled></td>"+
-			"<td><input type = 'text' class = 'orderComment' name ='orderComment' maxlength='100' disabled></td>"+
-			"<td><input type = 'button' value = '-' class='listMinusBtn'></td></tr>"
+		var ListData = "<tr class = 'matList'><td><input type = 'text'  class = 'matName form-control' name ='matName'></td>"+
+			"<td><div class = 'input-group'><input type = 'number' min='1'  class = 'orderQty form-control' name ='orderQty' disabled>"+
+			"<div class='input-group-append'><span class='input-group-text weiUnit'></span></div></td>"+
+			"<td><div class = 'input-group'><input type = 'number' min='0' step='100' class = 'orderBill form-control' name ='orderBill' disabled>"+
+			"<div class='input-group-append'><span class='input-group-text' >₩</span></div></td>"+
+			"<td><input type = 'text' class = 'orderComment form-control' name ='orderComment' maxlength='100' disabled></td>"+
+			"<td><input type = 'button' value = '-' class='listMinusBtn form-control'></td></tr>"
 			$("#listTable").append(ListData);
 		listNumAddition();
 	});
@@ -197,7 +209,6 @@ $(function() {
 	$(document).on("click",".matName",function(){
 		var regPopup = window
 		var listNo = $(this).parents(".matList").attr("id");
-		console.log(listNo);
 		window.open('./material/search?list='+listNo, null,
 				'width=400,height=500,toolbar=no,scrollbars=no,menubar=no,resizable=no');
 		
@@ -205,6 +216,9 @@ $(function() {
 	
 	//각 발주 항목의 발주 리스트 삭제 버튼을 클릭시
 	$(document).on("click", ".listMinusBtn", function(){
+		if(isOrderEnd){
+			return false;
+		}
 		if($(".matList").length < 2){
 			$.errMsgProc("발주 항목은 더 이상 지울 수 없습니다.", "info");
 			return false;
@@ -212,6 +226,11 @@ $(function() {
 		$(this).parents(".matList").remove();
 		listNumAddition();
 	});
+
+	//발주 상품 입력 창에 키입력 하지 않게 처리
+	$(document).on("keydown focusout",".matName",function(){
+		$(this).val("");
+	})
 
 	function companyCdValidation(companyCd) {
 		var regExp = /^[a-z0-9]{8}$/g;

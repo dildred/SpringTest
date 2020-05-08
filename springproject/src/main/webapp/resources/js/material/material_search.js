@@ -26,6 +26,7 @@ $(function(){
 	     }
 	});
 	
+	
 	//검색 버튼 입력시 처리
 	$("#searchBtn").on("click",function(){
 		$matName = $("#matName").val();
@@ -68,10 +69,18 @@ $(function(){
 		selectMatName = selectMatName.trim();
 		selectWeiUnit = selectWeiUnit.trim();
 		var listNum = "#"+$("#selectListNum").val();
+		for(var i = 0; i < $(".matName",opener.document).length; i++){
+			if($(".matName",opener.document).eq(i).val()==selectMatName){
+				popErrMsgProc("이미 등록중인 발주 재료입니다.");
+				return false;
+			}
+		}
 		$(listNum, opener.document).find(".matName").val(selectMatName);
 		$(listNum, opener.document).find(".matName").prop("disabled",true);
 		$(listNum, opener.document).find(".weiUnit").text(selectWeiUnit);
+		$(listNum, opener.document).find(".orderQty").val("1");
 		$(listNum, opener.document).find(".orderQty").prop("disabled",false);
+		$(listNum, opener.document).find(".orderBill").val("0");
 		$(listNum, opener.document).find(".orderBill").prop("disabled",false);
 		$(listNum, opener.document).find(".orderComment").prop("disabled",false);
 		
@@ -80,8 +89,9 @@ $(function(){
 	});
 	
 	$(document).on("click","#newMaterialInput",function(){
+		var matName = $("#matName").val();
 		var regPopup = window
-			.open('../material/regist', null,
+			.open('../material/regist?request='+matName, null,
 					'width=400,height=500,toolbar=no,scrollbars=no,menubar=no,resizable=no');
 	});
 	

@@ -46,7 +46,7 @@
     <div class="card-body">
     <div class="form-group">
     <label for="matName" class = "col-form-label col-form-label-sm pl-1">재료명</label>
-    <input type="text" class="form-control form-control-sm" id="matName"  name = "matName" <c:if test="${!empty modifyDto}">value = "${modifyDto.matName}" disabled</c:if>>
+    <input type="text" class="form-control form-control-sm" id="matName"  name = "matName" <c:if test="${!empty matName}">value = "${matName }"</c:if><c:if test="${!empty modifyDto}">value = "${modifyDto.matName}" disabled</c:if>>
     </div>
     <div class="form-group">
     <label for="weightUnit" class = "col-form-label col-form-label-sm pl-1">재료 중량 단위</label>

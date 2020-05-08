@@ -88,8 +88,11 @@ public class MaterialController {
 	 * 재료 등록 웹 페이지 호출
 	 * */
 	@RequestMapping(value = "/regist", method = RequestMethod.GET)
-	public ModelAndView registWndOpen(ModelAndView model) {
+	public ModelAndView registWndOpen(ModelAndView model, @RequestParam(value = "request", required = false) String matName) {
 		log.info("※========Material Regist 호출함=========※");
+		if(matName!=null) {
+		    model.addObject("matName", matName);
+		}
 		model.addObject("isRegMod", "regist");
 		model.setViewName(defaultFolder+"material_regist");
 		return model;
