@@ -32,9 +32,10 @@
 <body>
 <div id = "contents">
 <!-- 자기자신을 호출하는 form만들었음 대신 POST방식으로 데이터를 전송시킬것임. -->
-	<form action="./signup" method="POST">
+	<form action="./signup" method="POST" enctype="multipart/form-data">
 		<input type = "text" name = "eid" placeholder = "id입력하시오">
 		<input type = "password" name = "epw" placeholder = "비밀번호 입력하시오">
+		<input type = "file" name = "efile">		
 		<input type = "submit" value = "테스트하자">
 	</form>
 </div>

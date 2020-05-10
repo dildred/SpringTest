@@ -1,5 +1,7 @@
 package com.project.emp.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.emp.dto.TestDto;
+import com.project.emp.other.AutoFileSaving;
 import com.project.emp.service.TestService;
 
 /**
@@ -65,14 +70,15 @@ public class TestController {
 	 * 테스트 해보면 됨.<br>
 	 * */
 	@RequestMapping(value = "/signup", method=RequestMethod.POST)
-	public String postSignUpUrl(@ModelAttribute TestDto test) {
+	public String postSignUpUrl(@ModelAttribute TestDto test, @RequestParam(value = "efile", required = false) MultipartFile file, HttpServletRequest request) {
 		/**
 		 * 주소로 redirect시켜줌
 		 * 이때 주의점은 jsp가 아니고 주소로 연결시켜주기 때문에 RequestMapping에 작성된 주소로 연결된다는 것임.
 		 * 
 		 * */
 		log.debug(test.toString());
-		testService.proc(test);
+//		AutoFileSaving.OnefileClassficationing(file, request.getSession().getServletContext().getRealPath("/") + "/resources/files/savefiles/");
+//		testService.proc(test);
 		return "redirect:./signup";
 	}
 	

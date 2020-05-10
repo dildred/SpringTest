@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.emp.dto.MaterialDto;
 import com.project.emp.other.CodeMap;
+import com.project.emp.other.annotation.Window;
+import com.project.emp.other.annotation.Process;
 import com.project.emp.service.MaterialService;
 
 /**
@@ -45,8 +47,8 @@ public class MaterialController {
 	 * 재료 메인 웹 페이지 호출
 	 * */
 	@RequestMapping(method = RequestMethod.GET)
+	@Window("Material Main")
 	public ModelAndView mainWndOpen(ModelAndView model) {
-		log.info("※========Material Main Window 호출함=========※");
 //		List<MaterialDto> materialList = materialService.getMaterialList();
 		//jsp를 뷰로 설정함
 		model.setViewName(defaultFolder+"material_main");
@@ -59,15 +61,14 @@ public class MaterialController {
 	 * */
 	@RequestMapping(value = "/list-proc", method = RequestMethod.GET)
 	@ResponseBody
+	@Process("Material List")
 	public ModelAndView listProc(ModelAndView model, @RequestParam String page) {
-		log.info("==========Material List 프로세스 실행==========");
 		if(page==null) {
 			page = "1";
 		}
 		List<MaterialDto> materialList = materialService.getMaterialList(page);
 		model.setViewName(defaultFolder+"material_list");
 		model.addObject("materialList", materialList);
-		log.info("==========Material List 프로세스 실행 완료==========");
 		return model;
 	}
 	
@@ -76,10 +77,9 @@ public class MaterialController {
 	 * */
 	@RequestMapping(value = "/list-count", method = RequestMethod.GET)
 	@ResponseBody
+	@Process
 	public String listCount() {
-		log.info("==========Material Count 호출=========");
 		int count = materialService.getPageAllCount();
-		log.info("==========Material Count 호출 완료==========");
 		return String.valueOf(count);
 	}
 	
@@ -88,8 +88,8 @@ public class MaterialController {
 	 * 재료 등록 웹 페이지 호출
 	 * */
 	@RequestMapping(value = "/regist", method = RequestMethod.GET)
+	@Window("Material Regist")
 	public ModelAndView registWndOpen(ModelAndView model, @RequestParam(value = "request", required = false) String matName) {
-		log.info("※========Material Regist 호출함=========※");
 		if(matName!=null) {
 		    model.addObject("matName", matName);
 		}
@@ -102,8 +102,8 @@ public class MaterialController {
 	 * 재료 변경 웹 페이지 호출
 	 * */
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	@Window("Material Modify")
 	public ModelAndView modifyWndOpen(ModelAndView model, @ModelAttribute("matNo") String materialNo, @ModelAttribute("matName") String materialName) {
-		log.info("※========Material Modify 호출함=========※");
 		if(materialNo!=null){
 			MaterialDto modifyData = materialService.getMaterialData(materialNo, materialName);
 			model.addObject("modifyDto",modifyData);
@@ -117,8 +117,8 @@ public class MaterialController {
      * 재료 검색창 웹 페이지 호출
      * */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @Window("Material Search")
     public ModelAndView searchWndOpen(ModelAndView model, @RequestParam(value = "list") String listNo) {
-        log.info("※========Material Search 호출함=========※");
         if(listNo.startsWith("list")) {
             //에러 페이지 호출(추후 제작생각)
         }
@@ -132,12 +132,11 @@ public class MaterialController {
      * */
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     @ResponseBody
+    @Process("Material Search")
     public ModelAndView materialSearchProc(ModelAndView model, @RequestParam(value = "matName", defaultValue = "") String materialName) {
-        log.info("※========Material Search Process 실행=========※");
         List<MaterialDto> material = materialService.getSearchMaterialData(materialName);
         model.addObject("materialList", material);
         model.setViewName(defaultFolder+"search_list");
-        log.info("※========Material Search Process 실행 완료=========※");
         return model;
     }
 	
@@ -146,8 +145,8 @@ public class MaterialController {
 	 * */
 	@RequestMapping(value = "/modify", params="action=modi-data",method = RequestMethod.GET)
 	@ResponseBody
+	@Process("Material Modify")
 	public ResponseEntity<MaterialDto> modifyDataCall(ModelAndView model, @ModelAttribute("matName") String materialName) {
-		log.info("※========Material Modify Data 호출함=========※");
 		MaterialDto modifyData = null;
 		//이름 값이 비어있는지 체크
 		if(CodeMap.isEmpty(materialName)) {
@@ -165,10 +164,9 @@ public class MaterialController {
 	 * */
 	@RequestMapping(value = "/regist", method = RequestMethod.POST, consumes = "application/json", produces="application/json")
 	@ResponseBody
+	@Process("Material Regist")
 	public ResponseEntity<Integer> registProc(@RequestBody MaterialDto material) {
-		log.info("==========Material Regist 프로세스 실행==========");
 		Integer successCode = materialService.registMaterialData(material);
-		log.info("==========Material Regist 프로세스 실행 완료==========");
 		return new ResponseEntity<Integer>(successCode,HttpStatus.OK);
 	}
 	
@@ -178,10 +176,9 @@ public class MaterialController {
 	 * */
 	@RequestMapping(value = "/regist-init", method = RequestMethod.GET, produces="application/json")
 	@ResponseBody
+	@Process("Material Status")
 	public ResponseEntity<List<String>> requestMaterialStatus() {
-		log.info("==========Material Status DB호출==========");
 		List<String> getMaterialStatus = materialService.getMaterialStatus();
-		log.info("==========Material Status 호출 완료==========");
 		return new ResponseEntity<List<String>>(getMaterialStatus,HttpStatus.OK);
 	}
 	
@@ -190,10 +187,9 @@ public class MaterialController {
 	 * */
 	@RequestMapping(value = "/delete-proc", method = RequestMethod.POST, produces="application/json")
 	@ResponseBody
+	@Process("Material Delete")
 	public ResponseEntity<Integer> deleteProc(@RequestBody List<MaterialDto> materialList) {
-		log.info("==========Material Status DB호출==========");
 		Integer endNum = materialService.deleteMaterialData(materialList);
-		log.info("==========Material Status 호출 완료==========");
 		return new ResponseEntity<Integer>(endNum,HttpStatus.OK);
 	}
 	
@@ -202,10 +198,9 @@ public class MaterialController {
 	 * */
 	@RequestMapping(value = "/modify-proc", method = RequestMethod.POST, consumes = "application/json", produces="application/json")
 	@ResponseBody
+	@Process("Material Modify")
 	public ResponseEntity<Integer> modifyProc(@RequestBody MaterialDto material) {
-		log.info("==========Material Modify 프로세스 실행==========");
 		Integer successCode = materialService.modifyMaterialProc(material);
-		log.info("==========Material Modify 프로세스 실행 완료==========");
 		return new ResponseEntity<Integer>(successCode,HttpStatus.OK);
 	}
 	

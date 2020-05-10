@@ -96,9 +96,9 @@ public class AutoPaging {
 	public AutoPaging setListCount(int listCount) {
 		this.listCount = listCount;
 		limitA = ((page-1)*limit);
-		limitB = ((page)*limit);
-		if(limitB > listCount) {
-			limitB = listCount;
+		limitB = limit;
+		if(((page)*limit) > listCount) {
+			limitB = listCount%limit;
 		}
 		return setAutoMaxPage();
 	}
