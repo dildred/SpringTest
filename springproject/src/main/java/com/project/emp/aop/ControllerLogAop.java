@@ -30,17 +30,17 @@ public class ControllerLogAop {
         Process process;
         if((window = AnnotationUtils.findAnnotation(method, Window.class))!=null) {
             if(window.value().equals("")) {
-                log.info("========================"+method.getName()+" Window 창 오픈 준비"+"========================");
+                log.debug("========================"+method.getName()+" Window 창 오픈 준비"+"========================");
             } else {
-                log.info("========================"+window.value()+" Window 창 오픈 준비"+"========================");
+                log.debug("========================"+window.value()+" Window 창 오픈 준비"+"========================");
             }
         }
         //Process어노테이션이 붙어있는 메소드를 찾는 식
         else if((process = AnnotationUtils.findAnnotation(method, Process.class))!=null) {
             if(process.value().equals("")) {
-                log.info("========================"+method.getName()+" Process 실행"+"========================");
+                log.debug("========================"+method.getName()+" Process 실행"+"========================");
             } else {
-                log.info("========================"+process.value()+" Process 실행"+"========================");
+                log.debug("========================"+process.value()+" Process 실행"+"========================");
             }
         }
     }
@@ -54,17 +54,17 @@ public class ControllerLogAop {
         Process process;
         if((window = AnnotationUtils.findAnnotation(method, Window.class))!=null) {
             if(window.value().equals("")) {
-                log.info("========================"+method.getName()+" Window 창 오픈 완료"+"========================");
+                log.debug("========================"+method.getName()+" Window 창 오픈 완료"+"========================");
             } else {
-                log.info("========================"+window.value()+" Window 창 오픈 완료"+"========================");
+                log.debug("========================"+window.value()+" Window 창 오픈 완료"+"========================");
             }
         }
         //Process어노테이션이 붙어있는 메소드를 찾는 식
         else if((process = AnnotationUtils.findAnnotation(method, Process.class))!=null) {
             if(process.value().equals("")) {
-                log.info("========================"+method.getName()+" Process 실행 완료"+"========================");
+                log.debug("========================"+method.getName()+" Process 실행 완료"+"========================");
             } else {
-                log.info("========================"+process.value()+" Process 실행 완료"+"========================");
+                log.debug("========================"+process.value()+" Process 실행 완료"+"========================");
             }
         }
     }

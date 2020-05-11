@@ -1,0 +1,16 @@
+username = 'ec2-user'
+hostname = '52.15.192.154'
+passwdfile = 'C:\DEV\eclipse-workspace\SpringTest\springproject\linux_server_login\sppro.pem'
+
+getdir dir
+setdir dir
+
+msg = hostname
+strconcat msg ':22 /ssh /2 /auth=publickey /user='
+strconcat msg username
+strconcat msg ' /keyfile='
+strconcat msg passwdfile 
+
+connect msg
+
+end

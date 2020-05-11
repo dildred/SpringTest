@@ -2,7 +2,6 @@ package com.project.emp.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.emp.dto.MaterialOrderDto;
 import com.project.emp.dto.OrderCompanyDto;
+import com.project.emp.other.annotation.Window;
+import com.project.emp.other.annotation.Process;
 import com.project.emp.service.MaterialOrderService;
 
 /**
@@ -47,8 +48,8 @@ public class MaterialOrderController {
 	 * 발주 메인 웹 페이지 호출
 	 * */
 	@RequestMapping(method = RequestMethod.GET)
+	@Window("Material Order Main")
 	public ModelAndView mainWndOpen(ModelAndView model) {
-		log.info("※========Material Order Main Window 호출함=========※");
 		//jsp를 뷰로 설정함
 		model.setViewName(defaultFolder+"order_main");
 		return model;
@@ -58,10 +59,21 @@ public class MaterialOrderController {
      * 발주 내역 등록 버튼 클릭했을 때
      * */
     @RequestMapping(value = "/deatil", params = "action=regist",method = RequestMethod.GET)
+    @Window("Material Order Regist")
     public ModelAndView detailWindowVerRegist(ModelAndView model) {
-        log.info("※========Material Order Regist Window 호출함=========※");
         //jsp를 뷰로 설정함
         model.setViewName(defaultFolder+"order_detail");
+        return model;
+    }
+    
+    /**
+     * 발주 회사 수정 버튼 클릭했을 때
+     * */
+    @RequestMapping(value = "/deatil", params = "action=modify_company",method = RequestMethod.GET)
+    @Window("Order Company Modify")
+    public ModelAndView detailWindowVerModify(ModelAndView model) {
+        //jsp를 뷰로 설정함
+        model.setViewName(defaultFolder+"order_company");
         return model;
     }
     
@@ -70,11 +82,10 @@ public class MaterialOrderController {
      * */
     @RequestMapping(value = "/regist", method = RequestMethod.POST)
     @ResponseBody
+    @Process("Material Order Regist")
     public ResponseEntity<HashMap<String, String>> registMaterialOrder(@RequestBody List<MaterialOrderDto> materialOrderDtoList) {
-        log.info("※========Order Regist Process 호출함=========※");
         Integer successCode = materialOrderService.registMatOrder(materialOrderDtoList);
         HashMap<String, String> resultMap = materialOrderService.registOrderServiceResultMap(successCode);
-        log.info("==========Material Regist 프로세스 실행 완료==========");
         return new ResponseEntity<HashMap<String, String>>(resultMap,HttpStatus.OK);
     }
     
@@ -83,12 +94,11 @@ public class MaterialOrderController {
      * */
     @RequestMapping(value = "/dataCall", params = "action=companyCd", method = RequestMethod.GET)
     @ResponseBody
+    @Process("Company Data Call")
     public ResponseEntity<OrderCompanyDto> dataCall(@RequestParam("val") String companyCd) {
-        log.info("※========Company 데이터 취득 프로세스 호출함=========※");
         OrderCompanyDto orderDto;
         try {
             orderDto = materialOrderService.callAllOrderCompanyData(companyCd);
-            log.info("==========Company 데이터 취득 프로세스 실행 완료==========");
             return new ResponseEntity<OrderCompanyDto>(orderDto,HttpStatus.OK);
         } catch (Exception e) {
             //모종의 에러로 데이터 취득 실패시
