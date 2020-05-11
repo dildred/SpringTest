@@ -34,6 +34,7 @@
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/js/**" location="/resources/js/"  />
 	<resources mapping="/img/**" location="/resources/image/"  />
+	<!-- <resources mapping="/secure/**" location="/resources/secure/"  /> -->
 	<!-- js아래에 하위폴더 생성할 때에 매핑 설정해 줄 것. css도 마찬가지 -->
 	<!-- 공통설정 매핑 -->
 	<resources mapping="/js/process/**" location="/resources/js/process/"  />

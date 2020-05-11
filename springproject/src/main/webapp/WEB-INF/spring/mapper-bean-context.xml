@@ -30,6 +30,11 @@
 	<property name="mapperInterface" value="com.project.emp.dao.MasterDao"></property>
 	<property name="sqlSessionTemplate" ref="sqlSession"></property>
 </bean>
+<!-- FileProcessingDao -->
+<bean id="fileProcessingDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.project.emp.dao.FileProcessingDao"></property>
+	<property name="sqlSessionTemplate" ref="sqlSession"></property>
+</bean>
 
 <!-- StaffDao -->
 <bean id="staffDao" class="org.mybatis.spring.mapper.MapperFactoryBean">

@@ -39,8 +39,8 @@
 	<!-- form에 파일 다운로드 하는 거 설정 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="31457280" /> <!--file 30MB 1024*1024*30 -->
-		<property name="maxInMemorySize" value="31457280" />
+		<property name="maxUploadSize" value="5242880" /> <!--file 5MB 1024*1024*30 -->
+		<property name="maxInMemorySize" value="5242880" />
 	</bean>
 	
 	<import resource="mapper-bean-context.xml"></import>

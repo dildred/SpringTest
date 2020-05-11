@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 네임스페이스 -->
+<mapper namespace="com.project.emp.dao.FileProcessingDao">
+	<cache />
+	
+	
+	<insert id="insertProc" parameterType="java.lang.String">
+		insert into 
+			file_proc(file_origin_name, file_store_name, file_directory, file_size, proc_method, error_code) 
+		values(#{originName},#{storeName},#{directory},#{fileSize},#{method},#{message})
+	</insert>
+	
+	
+
+</mapper>

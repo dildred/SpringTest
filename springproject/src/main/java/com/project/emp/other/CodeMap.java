@@ -6,12 +6,14 @@ import java.util.regex.Pattern;
 
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.project.emp.dto.MaterialOrderDto;
-
 public class CodeMap {
 	
 	private static String noSpecialChaRegExp = "[!@#$%^&*(),.?\\\"\':{}|<>]";
 	private static String numbericAndAlphabet = "^[0-9a-z]*$ {8}";
+	
+	public static final String AWS_PWD = "/resources/secure/sppro.pem";
+	public static final String AWS_SERVER_HOST = "ec2-52-15-192-154.us-east-2.compute.amazonaws.com";
+	public static final String AWS_FILE_DEFAULT_CD = "/home/ec2-user/sppro";
 	
 	/**
 	 * 해당 문자가 숫자인지 확인시켜줌 숫자가 맞으면 true 아니면 false

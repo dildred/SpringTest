@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.emp.dto.TestDto;
-import com.project.emp.other.AutoFileSaving;
+import com.project.emp.other.ClassfiedFile;
+import com.project.emp.other.SFTPFileUploader;
+import com.project.emp.service.FileProcessingService;
 import com.project.emp.service.TestService;
 
 /**
@@ -41,6 +43,12 @@ public class TestController {
 	 */
 	@Autowired
 	private TestService testService;
+	
+	/**
+	 * 파일 저장 하는 법 1. Service를 호출한다.
+	 * */
+	@Autowired
+	private FileProcessingService fileProcessingService;
 	
 	/**
 	 * 이 주소로 GET방식으로 들어오게 되면 이 메소드를 실행시켜줌<br>
@@ -71,14 +79,23 @@ public class TestController {
 	 * */
 	@RequestMapping(value = "/signup", method=RequestMethod.POST)
 	public String postSignUpUrl(@ModelAttribute TestDto test, @RequestParam(value = "efile", required = false) MultipartFile file, HttpServletRequest request) {
-		/**
-		 * 주소로 redirect시켜줌
-		 * 이때 주의점은 jsp가 아니고 주소로 연결시켜주기 때문에 RequestMapping에 작성된 주소로 연결된다는 것임.
-		 * 
-		 * */
+		
+	    //파일 저장 하는 법 2. fileProcessingService의 fileClassfication메소드를 실행한다.
+	    //케이스1 파일, 디렉토리
+	    ClassfiedFile fileDto =  fileProcessingService.fileClassfication(file, "/test");
+	    //케이스 2 파일, 디렉토리, 저장할 파일명
+//	    ClassfiedFile fileDto =  fileProcessingService.fileClassfication(file, "/test", "myFile");
+	    //이후 fileDto의 파일명등을 DB에 등록함으로써 파일 명을 저장해둔다.
+	    
+	    
 		log.debug(test.toString());
-//		AutoFileSaving.OnefileClassficationing(file, request.getSession().getServletContext().getRealPath("/") + "/resources/files/savefiles/");
 //		testService.proc(test);
+		
+		/**
+         * 주소로 redirect시켜줌
+         * 이때 주의점은 jsp가 아니고 주소로 연결시켜주기 때문에 RequestMapping에 작성된 주소로 연결된다는 것임.
+         * 
+         * */
 		return "redirect:./signup";
 	}
 	

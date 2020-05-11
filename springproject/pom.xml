@@ -149,6 +149,21 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
+		<dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.3</version>
+        </dependency>
+        <dependency>
+	    	<groupId>com.jcraft</groupId>
+	    	<artifactId>jsch</artifactId>
+	    	<version>0.1.55</version>
+		</dependency>
+		<dependency>
+   			<groupId>com.sshtools</groupId>
+			<artifactId>j2ssh-maverick</artifactId>
+			<version>1.5.5</version>
+		</dependency>
 		<!-- 메일 의존 객체 -->
 		<dependency>
 			<groupId>javax.mail</groupId>
