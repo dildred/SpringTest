@@ -34,7 +34,6 @@
 <!-- jsp개별 처리 -->
 <script type="text/javascript" src="<c:url value = "/js/process/process_check.js"/>"></script>
 <script type="text/javascript" src="<c:url value = "/js/order/order_main.js"/>"></script>
-<script type="text/javascript" src="<c:url value = "/js/order/order_window1.js"/>"></script>
 <!-- css개별 처리 -->
 <link rel="stylesheet" href="<c:url value = "/css/order/order_main.css"/>">
 

@@ -157,5 +157,14 @@ public class AutoPaging {
 	public void setLimitB(int limitB) {
 		this.limitB = limitB;
 	}
+
+    @Override
+    public String toString() {
+        return "AutoPaging [page=" + page + ", limit=" + limit + ", startPage=" + startPage + ", endPage=" + endPage
+                + ", maxPage=" + maxPage + ", limitA=" + limitA + ", limitB=" + limitB + ", pageCount=" + pageCount
+                + ", listCount=" + listCount + ", prev=" + prev + ", next=" + next + "]";
+    }
+	
+	
 	
 }

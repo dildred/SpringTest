@@ -7,6 +7,7 @@
 	company_name, company_cd, company_tel, company_address, company_comment
 	</sql>
 
+	<!-- 발주회사를 발주회사 코드로 가져옴 -->
 	<select id="getCompanyToCompanyCd" parameterType="java.lang.String" resultMap="CompanyDataOnly">
 		select 
 			<include refid="allColumns"/>
@@ -23,7 +24,8 @@
 		<result column="company_address" jdbcType="VARCHAR" property="companyAddress"/>
 		<result column="company_comment" jdbcType="VARCHAR" property="companyComment"/>
 	</resultMap>
-
+	
+	<!-- 발주회사를 등록함 -->
 	<insert id="registOrderCompany" parameterType="OrderCompany">
 		insert into 
 			order_company(
@@ -62,5 +64,63 @@
 				
 	
 	</insert>
+	
+	<!-- 발주회사의 데이터 호출 -->
+	<select id="getCompanyData" resultMap="CompanyDataOnly">
+	select 
+	<include refid="allColumns"/>
+		from 
+			order_company 
+		where del_flg = '0' 
+		<if test="search!=null">
+			and
+				<if test='search == "searchingCd"'>
+				company_cd
+				</if>
+				<if test='search == "searchingName"'>
+				company_name
+				</if>
+				<if test='search == "searchingTel"'>
+				company_tel
+				</if>
+				<if test='search == "searchingAddress"'>
+				company_address
+				</if>
+				<if test='search !="searchingCd" and  search != "searchingName" and  search != "searchingTel" and search != "searchingAddress"'>
+				company_cd
+				</if>
+				 like CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+			</if>
+			limit #{limitA,jdbcType=INTEGER}<if test="limitA!=limitB">, #{limitB,jdbcType=INTEGER}</if>
+	</select>
+	
+	<!-- 발주회사의 데이터 개수를 호출 -->
+	<select id="getCompanyCount"  resultType="java.lang.Integer">
+		select 
+			count(*)
+		from 
+			order_company o 
+			where o.del_flg = '0'
+			<if test="search!=null">
+			and
+				<if test='search == "searchingCd"'>
+				company_cd
+				</if>
+				<if test='search == "searchingName"'>
+				company_name
+				</if>
+				<if test='search == "searchingTel"'>
+				company_tel
+				</if>
+				<if test='search == "searchingAddress"'>
+				company_address
+				</if>
+				<if test='search !="searchingCd" and  search != "searchingName" and  search != "searchingTel" and search != "searchingAddress"'>
+				company_cd
+				</if>
+				 like CONCAT('%',#{query,jdbcType=VARCHAR},'%')
+			</if>
+	
+	</select>
 
 </mapper>

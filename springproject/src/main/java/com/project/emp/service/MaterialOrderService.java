@@ -15,6 +15,7 @@ import com.project.emp.dao.OrderCompanyDao;
 import com.project.emp.dto.MaterialDto;
 import com.project.emp.dto.MaterialOrderDto;
 import com.project.emp.dto.OrderCompanyDto;
+import com.project.emp.other.AutoPaging;
 import com.project.emp.other.CodeMap;
 
 @Service
@@ -213,6 +214,21 @@ public class MaterialOrderService {
             resultMap.put("error", "DB에러로 인하여 데이터 작업이 정상적으로 작동하지 않았습니다. 다시 시도하여 주십시오.");
         }
         return resultMap;
+    }
+
+    public List<OrderCompanyDto> getCompanyDtoList(AutoPaging paging, String page, String search, String query) {
+       
+        if(CodeMap.isEmpty(query)) {
+            search = null;
+        }
+        try {
+            int companyDataCount = orderCompanyDao.getCompanyCount(search, query);
+            paging.setListCount(companyDataCount);
+            return orderCompanyDao.getCompanyData(search, query, paging.getLimitA(), paging.getLimitB());
+        } catch (Exception e) {
+            log.error("발주 회사 불러오기 에러 이유 : 모종의 DB에러" + e.getMessage());
+            return null;
+        }
     }
 
 }

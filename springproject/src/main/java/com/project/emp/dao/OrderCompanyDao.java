@@ -1,5 +1,7 @@
 package com.project.emp.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Repository;
@@ -21,5 +23,25 @@ public interface OrderCompanyDao {
      * @param companyInfo 발주 회사 데이터
      * */
     public Integer registOrderCompany(OrderCompanyDto companyInfo) throws Exception;
+
+    /**
+     * 발주 회사의 정보를 취득함<br>
+     * @param search 검색할 것
+     * @param query 검색어
+     * @param  limitA A부터
+     * @param  limitB B개까지
+     * */
+    public List<OrderCompanyDto> getCompanyData(@Param("search")String search, 
+            @Param("query") String query, 
+            @Param("limitA") int limitA, 
+            @Param("limitB")int j) throws Exception;
+
+    /**
+     * 해당 파라미터에 포함되는 발주 회사의 총 개수를 가져옴<br>
+     * @param search 검색할 것
+     * @param query 검색어
+     * */
+    public Integer getCompanyCount(@Param("search")String search, 
+            @Param("query")String query) throws Exception;
 
 }

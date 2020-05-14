@@ -18,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.emp.dto.MaterialOrderDto;
 import com.project.emp.dto.OrderCompanyDto;
-import com.project.emp.other.annotation.Window;
+import com.project.emp.other.AutoPaging;
+import com.project.emp.other.CodeMap;
 import com.project.emp.other.annotation.Process;
+import com.project.emp.other.annotation.Window;
 import com.project.emp.service.MaterialOrderService;
 
 /**
@@ -71,8 +73,26 @@ public class MaterialOrderController {
      * */
     @RequestMapping(value = "/deatil", params = "action=modify_company",method = RequestMethod.GET)
     @Window("Order Company Modify")
-    public ModelAndView detailWindowVerModify(ModelAndView model) {
+    public ModelAndView detailWindowVerModify(ModelAndView model, 
+            @RequestParam(value = "page", required = false) String page,
+            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "query", required = false) String query) {
         //jsp를 뷰로 설정함
+        AutoPaging paging;
+        if(CodeMap.isEmpty(page)) {
+            paging = new AutoPaging(1, 10, 10);
+        } else {
+            try {
+                paging = new AutoPaging(Integer.valueOf(page), 10, 10);
+            } catch(NumberFormatException n) {
+                log.error("발주 회사 불러오기 에러 이유 : page번호가 숫자가 아님" + n.getMessage());
+                return null;
+            }
+        }
+        List<OrderCompanyDto> companyDtoList = materialOrderService.getCompanyDtoList(paging, page, search, query);
+        model.addObject("paging", paging);
+        log.debug(paging.toString());
+        model.addObject("CompanyData",companyDtoList);
         model.setViewName(defaultFolder+"order_company");
         return model;
     }
