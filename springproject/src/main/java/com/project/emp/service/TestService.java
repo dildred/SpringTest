@@ -14,7 +14,7 @@ import com.project.emp.dto.TestDto;
  * bean컨테이너에 등록이 되어 있어야 Annotation Autowired(의존 객체 주입)를 사용할 수 있음.<br>
  * */
 @Service
-public class TestService {
+public class TestService extends AbstractService {
 
 	private Logger log = LoggerFactory.getLogger(TestService.class);
 	

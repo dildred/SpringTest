@@ -44,4 +44,10 @@ public interface OrderCompanyDao {
     public Integer getCompanyCount(@Param("search")String search, 
             @Param("query")String query) throws Exception;
 
+    /**
+     * 해당 파라미터값으로 발주 회사를 변경한다.
+     * @param companyDto 변경내용 DTO
+     * */
+    public Integer modifyOrderCompany(OrderCompanyDto companyDto) throws Exception;
+
 }

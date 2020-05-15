@@ -22,7 +22,7 @@ import com.project.emp.other.CodeMap;
 import com.project.emp.other.SFTPFileUploader;
 
 @Service
-public class FileProcessingService {
+public class FileProcessingService extends AbstractService {
     
     private Logger log = LoggerFactory.getLogger(FileProcessingService.class);
     

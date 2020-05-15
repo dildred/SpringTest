@@ -16,7 +16,7 @@ import com.project.emp.other.CodeMap;
 import com.project.emp.other.JsonPasing;
 
 @Service
-public class MaterialService {
+public class MaterialService extends AbstractService {
 	
 	@Autowired
 	private MaterialDao materialDao;

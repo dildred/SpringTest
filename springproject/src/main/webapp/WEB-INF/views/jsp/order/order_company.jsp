@@ -33,12 +33,12 @@
 				<tbody>
 				<c:if test="${empty CompanyData}">
 						<tr>
-							<td colspan ="6">해당 데이터가 존재하지 않습니다.</td>
+							<td class = "nothingData" colspan ="6">해당 데이터가 존재하지 않습니다.</td>
 						</tr>
 					</c:if>
 					<c:if test="${!empty CompanyData}">
 						<c:forEach items="${CompanyData }" var="data">
-						<tr>
+						<tr class = "comData">
 							<td scope="col"  class = "changeName companyCd table-light">${data.companyCd }</td>
 							<td scope="col"  class = "changeName companyName table-light">${data.companyName }</td>
 							<td scope="col"  class = "changeName companyTel table-light">${data.companyTel }</td>

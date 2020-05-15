@@ -7,7 +7,7 @@
 	company_name, company_cd, company_tel, company_address, company_comment
 	</sql>
 
-	<!-- 발주회사를 발주회사 코드로 가져옴 -->
+	<!-- 발주회사를 발주회사 코드로 가져옴(락걸기) -->
 	<select id="getCompanyToCompanyCd" parameterType="java.lang.String" resultMap="CompanyDataOnly">
 		select 
 			<include refid="allColumns"/>
@@ -15,6 +15,7 @@
 			order_company 
 		where del_flg != '1' 
 		and company_cd = #{companyCd, jdbcType=VARCHAR}
+		for update
 	</select>
 	
 	<resultMap type="OrderCompany" id="CompanyDataOnly">
@@ -122,5 +123,24 @@
 			</if>
 	
 	</select>
+	
+	<!-- 발주회사의 데이터 수정 -->
+	<update id="modifyOrderCompany" parameterType="OrderCompany">
+		update 
+			order_company 
+		set company_name =#{companyName,jdbcType=VARCHAR}
+			, company_tel =#{companyTel,jdbcType=VARCHAR}
+			, company_address =#{companyAddress,jdbcType=VARCHAR}
+			<if test="companyComment != null">
+				, company_comment =#{companyComment,jdbcType=VARCHAR}
+			</if>
+			<if test="companyComment == null">
+				, company_comment = ''
+			</if>
+			, update_date = now()
+			, update_user = 'SYSTEM'
+		where company_cd=#{companyCd,jdbcType=VARCHAR}
+		and del_flg = '0'
+	</update>
 
 </mapper>

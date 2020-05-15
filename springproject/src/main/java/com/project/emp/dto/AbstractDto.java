@@ -18,6 +18,9 @@ public abstract class AbstractDto {
 		// TODO Auto-generated method stub
 		return json.ModelOnJson(this);
 	}
+	public String toStringType() {
+        return this.getClass().getSimpleName();
+    }
 	
 	//자동으로 dto의 date를 YYYYMMDD로 바꿔주는 코드 
     public String dateToString(java.sql.Date date) {

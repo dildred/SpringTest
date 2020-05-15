@@ -1,6 +1,5 @@
 package com.project.emp.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.emp.dao.MasterDao;
 import com.project.emp.dao.MaterialDao;
 import com.project.emp.dao.MaterialOrderDao;
 import com.project.emp.dao.OrderCompanyDao;
@@ -19,7 +17,7 @@ import com.project.emp.other.AutoPaging;
 import com.project.emp.other.CodeMap;
 
 @Service
-public class MaterialOrderService {
+public class MaterialOrderService extends AbstractService {
     
     @Autowired
     private MaterialDao materialDao;
@@ -30,15 +28,29 @@ public class MaterialOrderService {
     @Autowired
     private OrderCompanyDao orderCompanyDao;
     
-    @Autowired
-    private MasterDao masterDao;
     
     private Logger log = LoggerFactory.getLogger(MaterialOrderService.class);
 
+    //발주 내역 등록 프로세스
     public Integer registMatOrder(List<MaterialOrderDto> materialOrderDtoList) {
         int isErr = 1;
-        if((isErr = companyValidationCheck(materialOrderDtoList))>1) {
+        if(CodeMap.isEmpty(materialOrderDtoList)) {
+            log.error("에러 발생 위치 : registMatOrder - Message : List가 존재하지 않습니다.");
+            //모종의 에러 발생(데이터가 존재하지 않음)
+            return 3;
+        }
+        OrderCompanyDto companyDto = new OrderCompanyDto();
+        companyDto.setCompanyCd(materialOrderDtoList.get(0).getCompanyCd());
+        companyDto.setCompanyName(materialOrderDtoList.get(0).getCompanyName());
+        companyDto.setCompanyTel(materialOrderDtoList.get(0).getCompanyTel());
+        companyDto.setCompanyAddress(materialOrderDtoList.get(0).getCompanyAddress());
+        if((isErr = companyValidationCheck(companyDto))>1) {
             return isErr;
+        }
+        if(CodeMap.isEmpty(materialOrderDtoList.get(0).getOrderDate())) {
+            //발주 날짜 데이터가 존재하지 않을 때
+            log.error("에러 발생 위치 : registMatOrder - Message : OrderDate가 존재하지 않습니다");
+            return 13;
         }
         OrderCompanyDto companyInfo = null;
         //회사가 데이터베이스에 존재하는 회사인지 확인
@@ -70,7 +82,7 @@ public class MaterialOrderService {
         for(MaterialOrderDto materialOrderDto : materialOrderDtoList) {
             if((isErr = materialDtoValidationCheck(materialOrderDto))>1) {
                 //하나라도 문제가 되는 것이 있으면 모든 데이터를 롤백후 에러 표시
-                CodeMap.rollback();
+                rollback();
                 return isErr;
             }
             MaterialDto materialDto;
@@ -79,7 +91,7 @@ public class MaterialOrderService {
                 if(!CodeMap.isEmpty(materialOrderDataIsExisting) && materialOrderDataIsExisting==1) {
                     //이미 해당 발주 데이터가 존재함
                     log.error("이미 존재하는 발주 데이터 입니다. ordCd : "+ordCd+" | matName : " + materialOrderDto.getMatName());
-                    CodeMap.rollback();
+                    rollback();
                     return 17;
                 }
                 if(ordNo==null) {
@@ -94,7 +106,7 @@ public class MaterialOrderService {
             } catch (Exception e) {
                 //matName이 존재하지 않는다면 지금까지 넣은 데이터 롤백
                 log.error("DB에러 발생 위치 : registMatOrder returning 2" +e.getMessage());
-                CodeMap.rollback();
+                rollback();
                 return 2;
             }
             try {
@@ -130,63 +142,57 @@ public class MaterialOrderService {
     }
 
     //발주 회사 데이터 발리데이션 체크
-    private int companyValidationCheck(List<MaterialOrderDto> materialOrderDtoList) {
-        if(CodeMap.isEmpty(materialOrderDtoList)) {
-            log.error("에러 발생 위치 : companyValidationCheck - Message : List가 존재하지 않습니다.");
-            //모종의 에러 발생(데이터가 존재하지 않음)
-            return 3;
-        }
-        if(CodeMap.isEmpty(materialOrderDtoList.get(0).getCompanyCd())) {
+    private int companyValidationCheck(OrderCompanyDto orderCompanyDto) {
+        if(CodeMap.isEmpty(orderCompanyDto.getCompanyCd())) {
             log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyCd가 존재하지 않습니다.");
             //회사 코드가 존재하지 않음
             return 4;
         }
-        if(CodeMap.isEmpty(materialOrderDtoList.get(0).getCompanyName())) {
+        if(CodeMap.isEmpty(orderCompanyDto.getCompanyName())) {
             log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyName이 존재하지 않습니다.");
             //회사 명이 존재하지 않음
             return 5;
         }
-        if(CodeMap.isEmpty(materialOrderDtoList.get(0).getCompanyTel())) {
+        if(CodeMap.isEmpty(orderCompanyDto.getCompanyTel())) {
             log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyTel이 존재하지 않습니다.");
             //회사 전화번호가 존재하지 않음
             return 6;
         }
-        if(CodeMap.isEmpty(materialOrderDtoList.get(0).getCompanyAddress())) {
+        if(CodeMap.isEmpty(orderCompanyDto.getCompanyAddress())) {
             log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyAddress가 존재하지 않습니다.");
             //회사 주소가 존재하지 않음
             return 7;
         }
-        if(CodeMap.isNumbericAndAlphabet(materialOrderDtoList.get(0).getCompanyCd())) {
-            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyCd에 잘못된 문자가 들어 있습니다 | 확인 : "+materialOrderDtoList.get(0).getCompanyCd());
+        if(CodeMap.isNumbericAndAlphabet(orderCompanyDto.getCompanyCd())) {
+            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyCd에 잘못된 문자가 들어 있습니다 | 확인 : "+orderCompanyDto.getCompanyCd());
             //회사 코드에 영어 소문자 및 숫자만 포함되어 있지 않음
             return 8;
         }
-        if(!CodeMap.isNumberic(materialOrderDtoList.get(0).getCompanyTel())) {
-            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyTel에는 숫자만이 가능합니다 | 확인 : "+materialOrderDtoList.get(0).getCompanyTel());
+        if(!CodeMap.isNumberic(orderCompanyDto.getCompanyTel())) {
+            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyTel에는 숫자만이 가능합니다 | 확인 : "+orderCompanyDto.getCompanyTel());
             //회사 전화번호에 숫자 외의 문자가 포함되어 있음
             return 9;
         }
-        if(!CodeMap.isLengthShortest(materialOrderDtoList.get(0).getCompanyName(), 50)) {
+        if(!CodeMap.isLengthShortest(orderCompanyDto.getCompanyName(), 50)) {
             //회사명 제한(최대 30글자) 너무 길 때
-            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyName이 너무 깁니다(30자 가능) | 확인 : Name"+materialOrderDtoList.get(0).getCompanyName().length());
+            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyName이 너무 깁니다(30자 가능) | 확인 : Name"+orderCompanyDto.getCompanyName().length());
             return 10;
         }
-        if(!CodeMap.isLengthShortest(materialOrderDtoList.get(0).getCompanyTel(), 20)) {
+        if(!CodeMap.isLengthShortest(orderCompanyDto.getCompanyTel(), 20)) {
             //회사전화번호 제한(최대 20글자) 너무 길 때
-            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyTel이 너무 깁니다(20자 가능) | 확인 : Name"+materialOrderDtoList.get(0).getCompanyTel().length());
+            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyTel이 너무 깁니다(20자 가능) | 확인 : Name"+orderCompanyDto.getCompanyTel().length());
             return 11;
         }
-        if(!CodeMap.isLengthShortest(materialOrderDtoList.get(0).getCompanyAddress(), 50)) {
+        if(!CodeMap.isLengthShortest(orderCompanyDto.getCompanyAddress(), 50)) {
             //회사주소 제한(최대 50글자) 너무 길 때
-            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyAddress가 너무 깁니다(50자 가능) | 확인 : Name"+materialOrderDtoList.get(0).getCompanyAddress().length());
+            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyAddress가 너무 깁니다(50자 가능) | 확인 : Name"+orderCompanyDto.getCompanyAddress().length());
             return 12;
         }
-        if(CodeMap.isEmpty(materialOrderDtoList.get(0).getOrderDate())) {
-            //발주 날짜 데이터가 존재하지 않을 때
-            log.error("에러 발생 위치 : companyValidationCheck - Message : OrderDate가 존재하지 않습니다");
-            return 13;
-        }
-        
+        if(!CodeMap.isLengthShortest(orderCompanyDto.getCompanyComment(), 50)) {
+            //회사주소 제한(최대 50글자) 너무 길 때
+            log.error("에러 발생 위치 : companyValidationCheck - Message : CompanyComment가 너무 깁니다(50자 가능) | 확인 : Name"+orderCompanyDto.getCompanyComment().length());
+            return 18;
+        } 
         return 1;
     }
 
@@ -195,29 +201,13 @@ public class MaterialOrderService {
         if(CodeMap.isEmpty(companyCd)) {
             return null;
         }
-        return orderCompanyDao.getCompanyToCompanyCd(companyCd);
+        OrderCompanyDto data = orderCompanyDao.getCompanyToCompanyCd(companyCd);
+        commit();
+        return data;
     }
 
-    //마스터 디비에서 메시지를 가져와서 호출하기
-    public HashMap<String, String> registOrderServiceResultMap(Integer successCode) {
-        HashMap<String, String> resultMap = new HashMap<String, String>();
-        try {
-            String message = masterDao.getValue("M001", "MATORDER", "REGIST", String.valueOf(successCode));
-            if(successCode==1) {
-                resultMap.put("success", message);
-            } else {
-                resultMap.put("error", message);
-            }
-        } catch (Exception e) {
-            log.error("DB에러 발생 위치 : registOrderServiceResultMap returning 3"+e.getMessage());
-            //모종의 에러(DB에러)로 데이터가 입력이 되지 않았을 때
-            resultMap.put("error", "DB에러로 인하여 데이터 작업이 정상적으로 작동하지 않았습니다. 다시 시도하여 주십시오.");
-        }
-        return resultMap;
-    }
-
+    //발주 회사 리스트 불러오기
     public List<OrderCompanyDto> getCompanyDtoList(AutoPaging paging, String page, String search, String query) {
-       
         if(CodeMap.isEmpty(query)) {
             search = null;
         }
@@ -229,6 +219,32 @@ public class MaterialOrderService {
             log.error("발주 회사 불러오기 에러 이유 : 모종의 DB에러" + e.getMessage());
             return null;
         }
+    }
+
+    //발주 회사 변경 프로세스
+    public Integer modifyOrderCompany(OrderCompanyDto companyDto) {
+        int isErr = 1;
+        try {
+            OrderCompanyDto oldData = orderCompanyDao.getCompanyToCompanyCd(companyDto.getCompanyCd());
+            if(CodeMap.isEqualDtoCompareTo(oldData, companyDto)) {
+                //값이 일치하여 변경이 불필요함.
+                return 2;
+            }            
+            if((isErr = companyValidationCheck(companyDto))>1) {
+                //회사 정보 발리데이션 체크
+                return isErr;
+            }
+            commit();
+            isErr = orderCompanyDao.modifyOrderCompany(companyDto);
+        } catch (Exception e) {
+            log.error("DB에러 " + e.getMessage());
+            return 0;
+        }
+        return isErr;
+    }
+
+    public Integer deleteOrderCompany(OrderCompanyDto companyDto) {
+        return null;
     }
 
 }

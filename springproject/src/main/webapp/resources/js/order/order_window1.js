@@ -141,7 +141,7 @@ $(function() {
 			}
 			jsonData[i] = datas;
 		}
-		console.log(jsonData);
+//		console.log(jsonData);
 		$.ajax({
 			type : 'POST',
 			url : './order/regist',

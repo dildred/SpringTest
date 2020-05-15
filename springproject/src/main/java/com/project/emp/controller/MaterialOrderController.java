@@ -22,6 +22,7 @@ import com.project.emp.other.AutoPaging;
 import com.project.emp.other.CodeMap;
 import com.project.emp.other.annotation.Process;
 import com.project.emp.other.annotation.Window;
+import com.project.emp.service.MasterProcessService;
 import com.project.emp.service.MaterialOrderService;
 
 /**
@@ -45,6 +46,8 @@ public class MaterialOrderController {
 	@Autowired
     private MaterialOrderService materialOrderService;
 	
+	@Autowired
+    private MasterProcessService masterProcessService;
 	
 	/**
 	 * 발주 메인 웹 페이지 호출
@@ -104,8 +107,41 @@ public class MaterialOrderController {
     @ResponseBody
     @Process("Material Order Regist")
     public ResponseEntity<HashMap<String, String>> registMaterialOrder(@RequestBody List<MaterialOrderDto> materialOrderDtoList) {
+        final String Code = "M001";
+        final String WindowName = "MATORDER";
+        final String Process = "REGIST";
         Integer successCode = materialOrderService.registMatOrder(materialOrderDtoList);
-        HashMap<String, String> resultMap = materialOrderService.registOrderServiceResultMap(successCode);
+        HashMap<String, String> resultMap = masterProcessService.getSuccessCodeMessageResultMap(successCode, Code, WindowName, Process);
+        return new ResponseEntity<HashMap<String, String>>(resultMap,HttpStatus.OK);
+    }
+    
+    /**
+     * 발주 회사 수정할때
+     * */
+    @RequestMapping(value = "/company", params = "action=modify", method = RequestMethod.POST)
+    @ResponseBody
+    @Process("Order Company Modify")
+    public ResponseEntity<HashMap<String, String>> modifyCompany(@RequestBody OrderCompanyDto companyDto) {
+        final String Code = "M002";
+        final String WindowName = "ORDERCOM";
+        final String Process = "MODIFY";
+        Integer successCode = materialOrderService.modifyOrderCompany(companyDto);
+        HashMap<String, String> resultMap = masterProcessService.getSuccessCodeMessageResultMap(successCode, Code, WindowName, Process);
+        return new ResponseEntity<HashMap<String, String>>(resultMap,HttpStatus.OK);
+    }
+    
+    /**
+     * 발주 회사 삭제할때
+     * */
+    @RequestMapping(value = "/company", params = "action=delete", method = RequestMethod.POST)
+    @ResponseBody
+    @Process("Order Company Delete")
+    public ResponseEntity<HashMap<String, String>> deleteCompany(@RequestBody OrderCompanyDto companyDto) {
+        final String Code = "M002";
+        final String WindowName = "ORDERCOM";
+        final String Process = "DELETE";
+        Integer successCode = materialOrderService.deleteOrderCompany(companyDto);
+        HashMap<String, String> resultMap = masterProcessService.getSuccessCodeMessageResultMap(successCode, Code, WindowName, Process);
         return new ResponseEntity<HashMap<String, String>>(resultMap,HttpStatus.OK);
     }
     
