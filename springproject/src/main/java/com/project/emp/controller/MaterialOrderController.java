@@ -80,6 +80,12 @@ public class MaterialOrderController {
             @RequestParam(value = "page", required = false) String page,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "query", required = false) String query) {
+        if(search != null && search.equals("null")) {
+            search = null;
+        }
+        if(query != null && query.equals("null")) {
+            query = null;
+        }
         //jsp를 뷰로 설정함
         AutoPaging paging;
         if(CodeMap.isEmpty(page)) {

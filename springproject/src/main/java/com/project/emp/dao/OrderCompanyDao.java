@@ -49,5 +49,11 @@ public interface OrderCompanyDao {
      * @param companyDto 변경내용 DTO
      * */
     public Integer modifyOrderCompany(OrderCompanyDto companyDto) throws Exception;
+    
+    /**
+     * 해당 발주 회사 데이터를 삭제한다. (삭제플래그를 1로)
+     * @param companyCd 삭제할 발주 회사 코드
+     * */
+    public Integer deleteOrderCompany(@Param("companyCd") String companyCd) throws Exception;
 
 }

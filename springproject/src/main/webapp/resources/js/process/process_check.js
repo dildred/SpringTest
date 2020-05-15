@@ -53,7 +53,11 @@ $(function(){
 		var width = 0;
 		var height = 0;
 		var black_width = $('body').width();
-		var black_height = $(window).height()-1;
+		var win_height = $(window).height()-1;
+		var black_height = $('html').height()-1;
+		if(black_height < win_height){
+			black_height = win_height;
+		}
 		var left = 0;
 		var top = 0;
 		width = 50;

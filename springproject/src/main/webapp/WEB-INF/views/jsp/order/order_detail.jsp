@@ -20,7 +20,7 @@
 				<label for ="orderDate" class="col col-form-label">발주 날짜</label><input type = "text"  class = "form-control"  id = "orderDate" name ="orderDate"  tabindex="3">
 			</div>
 			<script>
-			let now = new Date();
+			var now = new Date();
 			now.setDate(now.getDate()-90);
 			$('#orderDate').daterangepicker({
 				"singleDatePicker": true,

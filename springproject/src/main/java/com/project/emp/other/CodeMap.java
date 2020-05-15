@@ -22,7 +22,10 @@ public class CodeMap {
 	 * */
 	public static boolean isNumberic(String number) {
 		try {
-			Integer.parseInt(number);
+		    for(char numberChar : number.toCharArray()) {
+		        String oneNumber = String.valueOf(numberChar);
+		        Integer.parseInt(oneNumber);
+		    }
 		} catch(NumberFormatException e) {
 			return false;
 		}

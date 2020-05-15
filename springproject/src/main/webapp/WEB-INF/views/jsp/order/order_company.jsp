@@ -18,6 +18,8 @@
 								<option value = "searchingTel">전화번호로 찾기</option>
 								<option value = "searchingAddress">주소로 찾기</option>
 							</select>
+							<input type ="hidden" id="ingS"/>
+							<input type ="hidden" id="ingW"/>
 						</td>
 						<td colspan="1"  class ="border-0"><button id = "serachCompany" class = "btn btn-outline-success">찾기</button></td>
 					</tr>
@@ -54,10 +56,10 @@
 					<tr>
 						<td colspan ="6">
 							<div id = "paging">
-								<c:if test="${paging.prev }"><button type="button" class="btn btn-link">◁</button></c:if>
+								<c:if test="${paging.prev }"><button type="button" class="btn btn-link" value="${paging.prevPageNum }" id="prevBtn">◁</button></c:if>
 								<c:forEach begin="${paging.startPage }"  end="${paging.endPage }" step="1" var="num">
-									<button type="button" class="btn btn-link">${num }</button>
-								<c:if test="${paging.next }"><button type="button" class="btn btn-link">◁</button></c:if>
+									<button type="button" class="btn btn-link page">${num }</button>
+								<c:if test="${paging.next }"><button type="button" class="btn btn-link" value="${paging.prevNextNum }" id="nextBtn">▷</button></c:if>
 								</c:forEach>
 							</div>
 						</td>

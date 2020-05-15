@@ -14,6 +14,14 @@ $(function() {
 			dataCall();
 	});
 	
+	$(".page").on("click",function(){
+		thisPage = $(this).text();
+		whereValue = $("#ingW").val();
+		query = $("#ingS").val();
+		thisPage = thisPage.trim();
+		dataCall();
+});
+	
 	//데이터 호출
 	function dataCall(){
 		var requestData = 'action=modify_company&page='+thisPage+'&search='+whereValue+'&query='+query;
@@ -26,7 +34,11 @@ $(function() {
 			success : function(data){
 				$("#main_window").html(data);
 				$("#searchQuery").val(query);
-				$("#where option[value="+whereValue+"]").prop('selected', 'selected').change();
+				$("#ingS").val(query);
+				$("#ingW").val(whereValue);
+				if(whereValue != ""){
+					$("#where option[value="+whereValue+"]").prop('selected', 'selected').change();
+				}
 			},
 			error : function(data){
 				console.log("비 정상적인 에러가 발생하였습니다.  새로고침 해주세요")
@@ -73,7 +85,7 @@ $(function() {
 		inputboxOn = true;
 	});
 	
-	$(document).on("focusout","#changeVal",function(){
+	$(document).off("focusout").on("focusout","#changeVal",function(){
 		if(!inputboxOn){
 			return false;
 		}
@@ -83,7 +95,7 @@ $(function() {
 	});
 	
 	//값 변경 후 엔터키 입력시
-	$(document).on("keypress",'#changeVal',function(event){
+	$(document).off("keypress").on("keypress",'#changeVal',function(event){
 	     if ( event.which == 13 ) {
 	         $('#changeVal').focusout();
 	         return false;
@@ -97,14 +109,14 @@ $(function() {
 	});
 	
 	//검색창에 엔터키 입력시
-	$(document).on("keypress",'#searchQuery',function(event){
+	$(document).off("keypress").on("keypress",'#searchQuery',function(event){
 	     if ( event.which == 13 ) {
 	         $('#serachCompany').click();
 	         return false;
 	     }
 	});
 	
-	//검색 버튼 클릭시
+	//수정 버튼 클릭시
 	$(".changeCompany").on("click",function(){
 		$modifyData = $(this).parents(".comData");
 		var companyCd = $modifyData.find(".companyCd").text();
@@ -151,6 +163,44 @@ $(function() {
 				if(data.error!=null){
 					$.errMsgProc(data.error, "err");
 				}
+			},
+			error : function(data) {
+				$.errMsgProc("데이터를 수정하던 중 에러가 발생하였습니다. 새로고침 해주세요.", "err");
+			},
+			beforeSend : function() {
+				$.loadingImgCall();
+			},
+			complete : function() {
+				$.loadingImgCallClose();
+			}
+		});
+	});
+	
+	//삭제 버튼 클릭시
+	$(".deleteCompany").on("click",function(){
+		$modifyData = $(this).parents(".comData");
+		var companyCd = $modifyData.find(".companyCd").text();
+		//회사코드가 입력이 안되어 있다면
+		if (companyCd.length < 1) {
+			$.errMsgProc("회사 코드를 입력해주세요");
+			return false;
+		}
+		var datas = {
+				"companyCd" : companyCd.trim()
+			}
+		$.ajax({
+			type : 'POST',
+			url : './order/company?action=delete',
+			data : JSON.stringify(datas),
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				if(data.success!=null){
+					$.errMsgProc(data.success, "suc");
+				}
+				if(data.error!=null){
+					$.errMsgProc(data.error, "err");
+				}
+				dataCall();
 			},
 			error : function(data) {
 				$.errMsgProc("데이터를 수정하던 중 에러가 발생하였습니다. 새로고침 해주세요.", "err");

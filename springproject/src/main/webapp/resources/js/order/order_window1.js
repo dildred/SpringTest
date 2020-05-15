@@ -7,7 +7,7 @@ $(function() {
 	
 	var companyCd = "--------------";
 	//발주 내역 등록 버튼의 발주 회사 코드 입력시
-	$(document).on("focusout", "#companyCd", function() {
+	$("#companyCd").on("focusout", function() {
 		if(companyCd == $(this).val()){
 			return false;
 		}
@@ -31,7 +31,6 @@ $(function() {
 				if (data == null || data == "") {
 					companyInfoOpCl(true, null);
 					$.errMsgProc("존재하지 않는 회사 코드입니다. 회사 정보를 입력하여 주십시오.", "info")
-					$("#companyName").focus();
 					return false;
 				}
 				//				console.log(data);
@@ -63,8 +62,15 @@ $(function() {
 			$("#companyAddress").val("");
 		}
 	}
+	var dbclick = false;
 	//발주 이력 등록 버튼을 눌렀을 시에
-	$(document).on("click", "#submitBtn", function() {
+	$("#submitBtn").on("click", function() {
+		//다중클릭방지
+		if(dbclick){
+			$.errMsgProc("등록중입니다.","err");
+			return false;
+		}
+		dbclick = true;
 		if(isOrderEnd){
 			$.errMsgProc("이미 완료된 발주입니다.", "err");
 			return false;
@@ -150,6 +156,7 @@ $(function() {
 			success : function(data) {
 				if(data.success!=null){
 					isOrderEnd = true;
+					dbclick = false;
 					$("#companyCd").prop("disabled",true);
 					$("#companyName").prop("disabled",true);
 					$("#companyTel").prop("disabled",true);
@@ -179,7 +186,7 @@ $(function() {
 	});
 	
 	//발주 리스트 추가 버튼을 클릭시
-	$(document).on("click", "#listPlusBtn", function(){
+	$("#listPlusBtn").on("click", function(){
 		if(isOrderEnd){
 			return false;
 		}
@@ -206,7 +213,7 @@ $(function() {
 	}
 	
 	//재료 이름을 클릭했을 때
-	$(document).on("click",".matName",function(){
+	$(".matName").on("click", function(){
 		var regPopup = window
 		var listNo = $(this).parents(".matList").attr("id");
 		window.open('./material/search?list='+listNo, null,
@@ -215,7 +222,7 @@ $(function() {
 	})
 	
 	//각 발주 항목의 발주 리스트 삭제 버튼을 클릭시
-	$(document).on("click", ".listMinusBtn", function(){
+	$(".listMinusBtn").on("click", function(){
 		if(isOrderEnd){
 			return false;
 		}
@@ -228,7 +235,7 @@ $(function() {
 	});
 
 	//발주 상품 입력 창에 키입력 하지 않게 처리
-	$(document).on("keydown focusout",".matName",function(){
+	$(".matName").on("keydown focusout",function(){
 		$(this).val("");
 	})
 

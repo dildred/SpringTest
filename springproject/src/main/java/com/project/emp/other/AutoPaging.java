@@ -14,6 +14,8 @@ public class AutoPaging {
 	private int listCount; //총 게시글의 갯수7
 	private boolean prev; //이전 페이지의 유무를 확인하는 값
 	private boolean next; //다음 페이지의 유무를 확인하는 값
+	private int prevPageNum; //이전 페이지의 페이지 번호
+	private int nextPageNum; //다음 페이지의 페이지 번호
 	
 	/**생성자 생성시 현재 페이지와 페이지의 개수, 페이지 사이의 개수를 받아오게 함.<br>
 	예시 1~10까지 3페이지에서 불러오게 하고 싶고 개수는 한 페이지당 게시글 20개만 불러오고 싶을 때<br>
@@ -130,11 +132,13 @@ public class AutoPaging {
 	private AutoPaging isNextPrev() {
 		if(startPage != 1) {
 			prev = true;
+			prevPageNum = startPage-1;
 		} else {
 			prev = false;
 		}
 		if(endPage < maxPage) {
 			next = true;
+			nextPageNum = endPage+1;
 		} else {
 			next = false;
 		}
@@ -157,6 +161,22 @@ public class AutoPaging {
 	public void setLimitB(int limitB) {
 		this.limitB = limitB;
 	}
+	
+    public int getPrevPageNum() {
+        return prevPageNum;
+    }
+    
+    public void setPrevPageNum(int prevPageNum) {
+        this.prevPageNum = prevPageNum;
+    }
+
+    public int getNextPageNum() {
+        return nextPageNum;
+    }
+
+    public void setNextPageNum(int nextPageNum) {
+        this.nextPageNum = nextPageNum;
+    }
 
     @Override
     public String toString() {

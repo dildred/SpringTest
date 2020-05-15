@@ -73,7 +73,7 @@
 		from 
 			order_company 
 		where del_flg = '0' 
-		<if test="search!=null">
+		<if test="query != null">
 			and
 				<if test='search == "searchingCd"'>
 				company_cd
@@ -102,7 +102,7 @@
 		from 
 			order_company o 
 			where o.del_flg = '0'
-			<if test="search!=null">
+			<if test="query != null">
 			and
 				<if test='search == "searchingCd"'>
 				company_cd
@@ -139,8 +139,20 @@
 			</if>
 			, update_date = now()
 			, update_user = 'SYSTEM'
+			, update_cnt = update_cnt+1
 		where company_cd=#{companyCd,jdbcType=VARCHAR}
 		and del_flg = '0'
+	</update>
+	
+	<!-- 발주회사의 데이터 삭제 -->
+	<update id="deleteOrderCompany" parameterType="java.lang.String">
+		update 
+			order_company 
+		set del_flg = '1'
+			, update_date = now()
+			, update_user = 'SYSTEM'
+			, update_cnt = update_cnt+1
+		where company_cd=#{companyCd,jdbcType=VARCHAR}
 	</update>
 
 </mapper>
